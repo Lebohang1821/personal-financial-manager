@@ -6,7 +6,7 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.heading}>Welcome to Our App</Text>
       <Text style={styles.description}>
-        Explore our app's features and take control of your finances like never before.
+        Explore our app's features and take control your finances like never before.
       </Text>
       <View style={styles.buttonContainer}>
         <Button

@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+
 
 export default function Profile() {
   const [username, setUsername] = useState('JohnDoe');
   const [email, setEmail] = useState('johndoe@example.com');
   const [bio, setBio] = useState('Hello, I am John Doe.');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [socialLinks, setSocialLinks] = useState({
-    website: '',
-    twitter: '',
-    linkedin: '',
-  });
+  const [bankName, setBankName] = useState('Select Bank');
+  const [bankType, setBankType] = useState('Select Type');
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
@@ -60,7 +59,7 @@ export default function Profile() {
         <Text style={styles.label}>Bio:</Text>
         {isEditing ? (
           <TextInput
-            style={[styles.input, { height: 100 }]}
+            style={[styles.input, styles.bioInput]}
             multiline
             value={bio}
             onChangeText={setBio}
@@ -83,39 +82,39 @@ export default function Profile() {
         )}
       </View>
       <View style={styles.field}>
-        <Text style={styles.label}>Website:</Text>
+        <Text style={styles.label}>Bank Name:</Text>
         {isEditing ? (
-          <TextInput
+          <Picker
             style={styles.input}
-            value={socialLinks.website}
-            onChangeText={(text) => setSocialLinks({ ...socialLinks, website: text })}
-          />
+            selectedValue={bankName}
+            onValueChange={(itemValue) => setBankName(itemValue)}
+          >
+            <Picker.Item label="Select Bank" value="Select Bank" />
+            <Picker.Item label="Bank A" value="Bank A" />
+            <Picker.Item label="Bank B" value="Bank B" />
+            <Picker.Item label="Bank C" value="Bank C" />
+            {/* Add more bank options as needed */}
+          </Picker>
         ) : (
-          <Text style={styles.text}>{socialLinks.website}</Text>
+          <Text style={styles.text}>{bankName}</Text>
         )}
       </View>
       <View style={styles.field}>
-        <Text style={styles.label}>Twitter:</Text>
+        <Text style={styles.label}>Bank Type:</Text>
         {isEditing ? (
-          <TextInput
+          <Picker
             style={styles.input}
-            value={socialLinks.twitter}
-            onChangeText={(text) => setSocialLinks({ ...socialLinks, twitter: text })}
-          />
+            selectedValue={bankType}
+            onValueChange={(itemValue) => setBankType(itemValue)}
+          >
+            <Picker.Item label="Select Type" value="Select Type" />
+            <Picker.Item label="Savings" value="Savings" />
+            <Picker.Item label="Checking" value="Checking" />
+            <Picker.Item label="Investment" value="Investment" />
+            {/* Add more bank type options as needed */}
+          </Picker>
         ) : (
-          <Text style={styles.text}>{socialLinks.twitter}</Text>
-        )}
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>LinkedIn:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={socialLinks.linkedin}
-            onChangeText={(text) => setSocialLinks({ ...socialLinks, linkedin: text })}
-          />
-        ) : (
-          <Text style={styles.text}>{socialLinks.linkedin}</Text>
+          <Text style={styles.text}>{bankType}</Text>
         )}
       </View>
       {isEditing ? (
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 20,
     paddingTop: 40,
+    backgroundColor: '#f9f9f9',
   },
   imageContainer: {
     marginBottom: 20,
@@ -151,16 +151,17 @@ const styles = StyleSheet.create({
   field: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
     width: '100%',
   },
   label: {
-    width: 100,
+    width: 120,
     marginRight: 10,
     fontWeight: 'bold',
   },
   text: {
     flex: 1,
+    fontSize: 16,
   },
   input: {
     flex: 1,
@@ -168,5 +169,9 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     paddingHorizontal: 10,
+    backgroundColor: '#fff',
+  },
+  bioInput: {
+    height: 100,
   },
 });
