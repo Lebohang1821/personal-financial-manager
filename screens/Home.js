@@ -14,13 +14,14 @@ const homeStyles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    color: "red", // Change color to red
+    marginTop: -100,
+    color: "red",
   },
   description: {
     fontSize: 16,
     textAlign: "center",
-    marginBottom: 30,
-    color: "red", // Change color to red
+    marginBottom: 10,
+    color: "#008080",
   },
 });
 
@@ -67,7 +68,14 @@ export default function Home() {
   return (
     <ScrollView contentContainerStyle={homeStyles.container}>
       <View>
-        <Text style={homeStyles.heading}>Welcome to Our App</Text>
+        <Text style={{ textAlign: "center" }}>
+          <Text style={[homeStyles.heading, { fontSize: 54 }]}>
+            Welcome to{"\n"}
+          </Text>
+          <Text style={[homeStyles.heading, { fontSize: 14 }]}>
+            Personal Finance Manager
+          </Text>
+        </Text>
         <Text style={homeStyles.description}>
           Explore our app's features and take control of your finances like
           never before.
