@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Profile() {
   const [username, setUsername] = useState("JohnDoe");
@@ -17,6 +18,9 @@ export default function Profile() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [bankName, setBankName] = useState("Select Bank");
   const [bankType, setBankType] = useState("Select Type");
+  const [profilePic, setProfilePic] = useState(
+    "https://via.placeholder.com/150"
+  );
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
@@ -28,20 +32,27 @@ export default function Profile() {
     setIsEditing(false);
   };
 
-  const handleChooseImage = () => {
-    // Implement image selection logic (e.g., using image picker library)
+  const handleChooseImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    const pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    setProfilePic(pickerResult.uri);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={handleChooseImage}
-        style={styles.imageContainer}
-      >
-        <Image
-          source={{ uri: "https://via.placeholder.com/150" }}
-          style={styles.image}
-        />
+      <TouchableOpacity onPress={handleChooseImage} style={styles.imageContainer}>
+        <Image source={{ uri: profilePic }} style={styles.image} />
       </TouchableOpacity>
       <Text style={styles.heading}>Profile</Text>
       <View style={styles.field}>
