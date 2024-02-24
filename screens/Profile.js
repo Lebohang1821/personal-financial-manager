@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -11,6 +10,9 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
+
+// Custom horizontal rule component
+const Hr = () => <View style={styles.hr} />;
 
 export default function Profile() {
   const [username, setUsername] = useState("JohnDoe");
@@ -149,10 +151,16 @@ export default function Profile() {
             <Text style={styles.text}>{bankType}</Text>
           )}
         </View>
+        {/* Render horizontal rule component */}
+        <Hr />
         {isEditing ? (
-          <Button title="Save" onPress={handleSave} />
+          <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
         ) : (
-          <Button title="Edit" onPress={handleEdit} />
+          <TouchableOpacity onPress={handleEdit} style={styles.editButton}>
+            <Text style={styles.buttonText}>Edit</Text>
+          </TouchableOpacity>
         )}
       </View>
     </ScrollView>
@@ -165,14 +173,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 10,
     backgroundColor: "#f9f9f9",
   },
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#919191",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 5,
+    // For Android elevation (box shadow)
+    elevation: 5,
+    // For iOS shadow
+    shadowColor: "#ff0000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   imageContainer: {
     marginBottom: 20,
@@ -185,12 +205,12 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 15,
   },
   field: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 5,
     width: "100%",
   },
   label: {
@@ -212,5 +232,30 @@ const styles = StyleSheet.create({
   },
   bioInput: {
     height: 100,
+  },
+  saveButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 10,
+    paddingHorizontal: 90,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  editButton: {
+    backgroundColor: "#2196F3",
+    paddingVertical: 10,
+    paddingHorizontal: 90,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  hr: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#ccc",
+    marginVertical: 10,
   },
 });

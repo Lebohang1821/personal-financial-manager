@@ -53,7 +53,14 @@ export default function App() {
                     size={24}
                     color={focused ? "#ff0000" : "#111"}
                   />
-                  <Text style={{ fontSize: 12, color: "#ff0000" }}>HOME</Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: focused ? "#ff0000" : "#111",
+                    }}
+                  >
+                    HOME
+                  </Text>
                 </View>
               ),
             }}
@@ -71,7 +78,14 @@ export default function App() {
                     size={24}
                     color={focused ? "#ff0000" : "#111"}
                   />
-                  <Text style={{ fontSize: 12, color: "#ff0000" }}>WALLET</Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: focused ? "#ff0000" : "#111",
+                    }}
+                  >
+                    WALLET
+                  </Text>
                 </View>
               ),
             }}
@@ -110,7 +124,12 @@ export default function App() {
                     size={24}
                     color={focused ? "#ff0000" : "#111"}
                   />
-                  <Text style={{ fontSize: 12, color: "#ff0000" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: focused ? "#ff0000" : "#111",
+                    }}
+                  >
                     PROFILE
                   </Text>
                 </View>
@@ -130,7 +149,12 @@ export default function App() {
                     size={24}
                     color={focused ? "#ff0000" : "#111"}
                   />
-                  <Text style={{ fontSize: 12, color: "#ff0000" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      color: focused ? "#ff0000" : "#111",
+                    }}
+                  >
                     SETTINGS
                   </Text>
                 </View>

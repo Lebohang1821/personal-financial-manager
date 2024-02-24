@@ -4,8 +4,6 @@ import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
 const homeStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: "center",
-    justifyContent: "center",
     paddingHorizontal: 20,
     paddingTop: 40, // Adjust paddingTop as needed
   },
@@ -14,7 +12,7 @@ const homeStyles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    marginTop: -100,
+    marginTop: -50,
     color: "red",
   },
   description: {
@@ -27,14 +25,14 @@ const homeStyles = StyleSheet.create({
 
 const mockupStyles = StyleSheet.create({
   mockupContainer: {
-    marginTop: 40,
+    marginTop: 10,
   },
   labelContainer: {
-    marginBottom: 20,
+    marginBottom: 4,
   },
   label: {
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 0,
   },
   input: {
     borderWidth: 1,
@@ -88,29 +86,51 @@ export default function Home() {
 
 function Mockup() {
   return (
-    <View style={mockupStyles.mockupContainer}>
-      <View style={mockupStyles.labelContainer}>
-        <Text style={mockupStyles.label}>Bank Name: Capitec Bank</Text>
-      </View>
-      {/* Wrap the text within a <Text> component */}
-      <Text style={mockupStyles.label}>Output of savings</Text>
-      <View>
-        <TextInput
-          style={mockupStyles.input}
-          onChangeText={(text) => {
-            // Handle text input change here
-          }}
-        />
-      </View>
-      <View style={mockupStyles.labelContainer}>
-        <Text style={mockupStyles.label}>Bad savings for this month</Text>
-      </View>
-      <View style={mockupStyles.labelContainer}>
-        <Text style={mockupStyles.label}>R 5000 saved this month</Text>
-      </View>
-      <View style={mockupStyles.labelContainer}>
-        <Text style={mockupStyles.label}>R 5000 saved last month</Text>
+    <View style={styles.container}>
+      <View style={mockupStyles.mockupContainer}>
+        <View style={mockupStyles.labelContainer}>
+          <Text style={mockupStyles.label}>Bank Name: Capitec Bank</Text>
+        </View>
+        {/* Wrap the text within a <Text> component */}
+        <Text style={mockupStyles.label}>Output of savings</Text>
+        <View>
+          <TextInput
+            style={mockupStyles.input}
+            onChangeText={(text) => {
+              // Handle text input change here
+            }}
+          />
+        </View>
+        <View style={mockupStyles.labelContainer}>
+          <Text style={mockupStyles.label}>Bad savings for this month</Text>
+        </View>
+        <View style={mockupStyles.labelContainer}>
+          <Text style={mockupStyles.label}>R 5000 saved this month</Text>
+        </View>
+        <View style={mockupStyles.labelContainer}>
+          <Text style={mockupStyles.label}>R 5000 saved last month</Text>
+        </View>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "flex-start",
+    backgroundColor: "#919191",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 5,
+    // For Android elevation (box shadow)
+    elevation: 5,
+    // For iOS shadow
+    shadowColor: "#ff0000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+});
