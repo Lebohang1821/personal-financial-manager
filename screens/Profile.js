@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
+import * as Sharing from 'expo-sharing'; // Import Sharing module
 
 export default function Profile() {
   const [username, setUsername] = useState("JohnDoe");
@@ -49,105 +50,23 @@ export default function Profile() {
     setProfilePic(pickerResult.uri);
   };
 
+  // Function to handle sharing the profile picture
+  const handleShareProfilePic = async () => {
+    try {
+      await Sharing.shareAsync(profilePic);
+    } catch (error) {
+      console.error('Error sharing profile picture:', error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleChooseImage} style={styles.imageContainer}>
         <Image source={{ uri: profilePic }} style={styles.image} />
       </TouchableOpacity>
+      <Button title="Share Profile Picture" onPress={handleShareProfilePic} /> {/* Add Share Profile Picture button */}
       <Text style={styles.heading}>Profile</Text>
-      <View style={styles.field}>
-        <Text style={styles.label}>Username:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
-          />
-        ) : (
-          <Text style={styles.text}>{username}</Text>
-        )}
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>Email:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-          />
-        ) : (
-          <Text style={styles.text}>{email}</Text>
-        )}
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>Bio:</Text>
-        {isEditing ? (
-          <TextInput
-            style={[styles.input, styles.bioInput]}
-            multiline
-            value={bio}
-            onChangeText={setBio}
-          />
-        ) : (
-          <Text style={styles.text}>{bio}</Text>
-        )}
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>Phone Number:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-          />
-        ) : (
-          <Text style={styles.text}>{phoneNumber}</Text>
-        )}
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>Bank Name:</Text>
-        {isEditing ? (
-          <Picker
-            style={styles.input}
-            selectedValue={bankName}
-            onValueChange={(itemValue) => setBankName(itemValue)}
-          >
-            <Picker.Item label="Select Bank" value="Select Bank" />
-            <Picker.Item label="Capitec" value="Capitec" />
-            <Picker.Item label="Standard Bank" value="Standard Bank" />
-            <Picker.Item label="FNB" value="FNB" />
-            <Picker.Item label="Time Bank" value="Time Bank" />
-            <Picker.Item label="ABSA" value="ABSA Bank" />
-            {/* Add more bank options as needed */}
-          </Picker>
-        ) : (
-          <Text style={styles.text}>{bankName}</Text>
-        )}
-      </View>
-      <View style={styles.field}>
-        <Text style={styles.label}>Bank Type:</Text>
-        {isEditing ? (
-          <Picker
-            style={styles.input}
-            selectedValue={bankType}
-            onValueChange={(itemValue) => setBankType(itemValue)}
-          >
-            <Picker.Item label="Select Type" value="Select Type" />
-            <Picker.Item label="Savings" value="Savings" />
-            <Picker.Item label="Checking" value="Checking" />
-            <Picker.Item label="Investment" value="Investment" />
-            {/* Add more bank type options as needed */}
-          </Picker>
-        ) : (
-          <Text style={styles.text}>{bankType}</Text>
-        )}
-      </View>
-      {isEditing ? (
-        <Button title="Save" onPress={handleSave} />
-      ) : (
-        <Button title="Edit" onPress={handleEdit} />
-      )}
+      {/* Rest of your profile code */}
     </View>
   );
 }
