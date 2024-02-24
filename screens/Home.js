@@ -19,7 +19,22 @@ const homeStyles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     marginBottom: 10,
-    color: "#008080",
+    justifyContent: "flex-start",
+    backgroundColor: "#919191",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 5,
+    color: "#e3f0f0",
+    elevation: 5,
+    // For iOS shadow
+    shadowColor: "#ff0000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    textDecorationLine: "underline",
   },
 });
 
@@ -70,7 +85,7 @@ export default function Home() {
           <Text style={[homeStyles.heading, { fontSize: 54 }]}>
             Welcome to{"\n"}
           </Text>
-          <Text style={[homeStyles.heading, { fontSize: 14 }]}>
+          <Text style={[homeStyles.heading, { fontSize: 19 }]}>
             Personal Finance Manager
           </Text>
         </Text>
@@ -89,7 +104,9 @@ function Mockup() {
     <View style={styles.container}>
       <View style={mockupStyles.mockupContainer}>
         <View style={mockupStyles.labelContainer}>
-          <Text style={mockupStyles.label}>Bank Name: Capitec Bank</Text>
+          <Text>
+            <Text style={{ fontWeight: "bold" }}>Bank Name:</Text> Capitec Bank
+          </Text>
         </View>
         {/* Wrap the text within a <Text> component */}
         <Text style={mockupStyles.label}>Output of savings</Text>
