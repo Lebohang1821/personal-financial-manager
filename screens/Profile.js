@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
 
 export default function Profile() {
-  const [username, setUsername] = useState('JohnDoe');
-  const [email, setEmail] = useState('johndoe@example.com');
-  const [bio, setBio] = useState('Hello, I am John Doe.');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [bankName, setBankName] = useState('Select Bank');
-  const [bankType, setBankType] = useState('Select Type');
+  const [username, setUsername] = useState("JohnDoe");
+  const [email, setEmail] = useState("johndoe@example.com");
+  const [bio, setBio] = useState("Hello, I am John Doe.");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [bankName, setBankName] = useState("Select Bank");
+  const [bankType, setBankType] = useState("Select Type");
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
@@ -27,8 +34,14 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleChooseImage} style={styles.imageContainer}>
-        <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.image} />
+      <TouchableOpacity
+        onPress={handleChooseImage}
+        style={styles.imageContainer}
+      >
+        <Image
+          source={{ uri: "https://via.placeholder.com/150" }}
+          style={styles.image}
+        />
       </TouchableOpacity>
       <Text style={styles.heading}>Profile</Text>
       <View style={styles.field}>
@@ -129,11 +142,11 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    justifyContent: "flex-start",
     paddingHorizontal: 20,
     paddingTop: 40,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
   },
   imageContainer: {
     marginBottom: 20,
@@ -145,19 +158,19 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   field: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
-    width: '100%',
+    width: "100%",
   },
   label: {
     width: 120,
     marginRight: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   text: {
     flex: 1,
@@ -166,10 +179,10 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   bioInput: {
     height: 100,
