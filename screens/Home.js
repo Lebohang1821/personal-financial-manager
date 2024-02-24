@@ -1,55 +1,97 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 
-export default function Home({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to Our App</Text>
-      <Text style={styles.description}>
-        Explore our app's features and take control your finances like never before.
-      </Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate('Login')}
-          style={styles.button}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => navigation.navigate('SignUp')}
-          style={styles.button}
-        />
-      </View>
-      {/* Add more components/content here */}
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
+const homeStyles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+    paddingTop: 40, // Adjust paddingTop as needed
   },
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
+    color: 'red', // Change color to red
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 30,
+    color: 'red', // Change color to red
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  button: {
-    width: '45%',
-  },
-  // Add more styles as needed
 });
+
+const mockupStyles = StyleSheet.create({
+  mockupContainer: {
+    marginTop: 40,
+  },
+  labelContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    color: 'black', // Change input text color if needed
+  },
+  paragraph: {
+    fontStyle: 'italic',
+    marginBottom: 10,
+  },
+  link: {
+    color: 'blue', // Change link color if needed
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  icon: {
+    color: 'orange', // Change icon color if needed
+  },
+});
+
+export default function Home() {
+  return (
+    <ScrollView contentContainerStyle={homeStyles.container}>
+      <View>
+        <Text style={homeStyles.heading}>Welcome to Our App</Text>
+        <Text style={homeStyles.description}>
+          Explore our app's features and take control of your finances like never before.
+        </Text>
+        <Mockup />
+      </View>
+    </ScrollView>
+  );
+}
+
+function Mockup() {
+  return (
+    <View style={mockupStyles.mockupContainer}>
+      <View style={mockupStyles.labelContainer}>
+        <Text style={mockupStyles.label}>Bank Name:</Text>
+        <Text style={mockupStyles.label}>Capitec Bank</Text>
+      </View>
+     
+      <View style={mockupStyles.labelContainer}>
+        <Text style={mockupStyles.label}>Bad savings for this month</Text>
+        
+      </View>
+      <View style={mockupStyles.labelContainer}>
+        <Text style={mockupStyles.label}>R 5000 saved this month</Text>
+        
+      </View>
+      <View style={mockupStyles.labelContainer}>
+        <Text style={mockupStyles.label}>R 5000 saved last month</Text>
+        
+      </View>
+    </View>
+  );
+}
