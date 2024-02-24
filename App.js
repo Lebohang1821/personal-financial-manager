@@ -1,5 +1,5 @@
 import { Text, Platform, View } from "react-native";
-import { Home, Portfolio, Settings, Transaction } from "./SRC/screens";
+import { Home, Portfolio, Settings, Transaction } from "./screens";
 import Profile from "./screens/Profile";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";

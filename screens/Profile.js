@@ -103,9 +103,11 @@ export default function Profile() {
             onValueChange={(itemValue) => setBankName(itemValue)}
           >
             <Picker.Item label="Select Bank" value="Select Bank" />
-            <Picker.Item label="Bank A" value="Bank A" />
-            <Picker.Item label="Bank B" value="Bank B" />
-            <Picker.Item label="Bank C" value="Bank C" />
+            <Picker.Item label="Capitec" value="Capitec" />
+            <Picker.Item label="Standard Bank" value="Standard Bank" />
+            <Picker.Item label="FNB" value="FNB" />
+            <Picker.Item label="Time Bank" value="Time Bank" />
+            <Picker.Item label="ABSA" value="ABSA Bank" />
             {/* Add more bank options as needed */}
           </Picker>
         ) : (
