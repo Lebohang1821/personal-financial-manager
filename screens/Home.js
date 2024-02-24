@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
 
 const homeStyles = StyleSheet.create({
@@ -41,6 +41,7 @@ const homeStyles = StyleSheet.create({
 const mockupStyles = StyleSheet.create({
   mockupContainer: {
     marginTop: 10,
+    padding: 2,
   },
   labelContainer: {
     marginBottom: 4,
@@ -48,6 +49,24 @@ const mockupStyles = StyleSheet.create({
   label: {
     fontWeight: "bold",
     marginBottom: 0,
+  },
+  transactionContainer: {
+    marginBottom: 10,
+    backgroundColor: "#a88686",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 5,
+  },
+  transactionText: {
+    fontSize: 16,
+    color: "#313131",
+  },
+  topContainer: {
+    backgroundColor: "#ccc",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    marginTop: 10,
   },
   input: {
     borderWidth: 1,
@@ -61,19 +80,6 @@ const mockupStyles = StyleSheet.create({
     marginBottom: 10,
     width: "100%", // Adjust width as needed
     height: 190, // Adjust height as needed
-  },
-  paragraph: {
-    fontStyle: "italic",
-    marginBottom: 10,
-  },
-  link: {
-    color: "blue", // Change link color if needed
-  },
-  italic: {
-    fontStyle: "italic",
-  },
-  icon: {
-    color: "orange", // Change icon color if needed
   },
 });
 
@@ -100,6 +106,38 @@ export default function Home() {
 }
 
 function Mockup() {
+  const [transactions, setTransactions] = useState([
+    {
+      bank: "Capitec",
+      type: "money in",
+      amount: 1500,
+      savings: -500,
+      available: 1490,
+    },
+    {
+      bank: "Capitec",
+      type: "money in",
+      amount: 1500,
+      savings: -500,
+      available: 1490,
+    },
+    {
+      bank: "Capitec",
+      type: "money in",
+      amount: 1500,
+      savings: -500,
+      available: 1490,
+    },
+    {
+      bank: "Capitec",
+      type: "money in",
+      amount: 1500,
+      savings: -500,
+      available: 1490,
+    },
+    // Add more transactions as needed
+  ]);
+
   return (
     <View style={styles.container}>
       <View style={mockupStyles.mockupContainer}>
@@ -110,14 +148,28 @@ function Mockup() {
         </View>
         {/* Wrap the text within a <Text> component */}
         <Text style={mockupStyles.label}>Output of savings</Text>
-        <View>
-          <TextInput
-            style={mockupStyles.input}
-            onChangeText={(text) => {
-              // Handle text input change here
+
+        <View style={mockupStyles.topContainer}>
+          <ScrollView
+            contentContainerStyle={{
+              paddingTop: 10,
+              paddingBottom: 10,
             }}
-          />
+          >
+            <View style={mockupStyles.container}>
+              {transactions.slice(0, 3).map((transaction, index) => (
+                <View style={mockupStyles.transactionContainer} key={index}>
+                  <Text style={mockupStyles.transactionText}>
+                    {transaction.bank} - {transaction.type.toUpperCase()}{" "}
+                    Savings: R {transaction.savings} Available amount: R{" "}
+                    {transaction.available}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
         </View>
+
         <View style={mockupStyles.labelContainer}>
           <Text style={mockupStyles.label}>Bad savings for this month</Text>
         </View>
