@@ -39,6 +39,7 @@ const mockupStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+    backgroundColor: "#fff5ee",
     paddingHorizontal: 10,
     paddingVertical: 5,
     color: "black", // Change input text color if needed
@@ -85,12 +86,14 @@ function Mockup() {
       </View>
       {/* Wrap the text within a <Text> component */}
       <Text style={mockupStyles.label}>Output of savings</Text>
-      <TextInput
-        style={mockupStyles.input}
-        onChangeText={(text) => {
-          // Handle text input change here
-        }}
-      />
+      <View>
+        <TextInput
+          style={mockupStyles.input}
+          onChangeText={(text) => {
+            // Handle text input change here
+          }}
+        />
+      </View>
       <View style={mockupStyles.labelContainer}>
         <Text style={mockupStyles.label}>Bad savings for this month</Text>
       </View>
