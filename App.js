@@ -5,7 +5,6 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-
 import Home from "./screens/Home";
 import Portfolio from "./screens/Portfolio";
 import Transaction from "./screens/Transaction";
