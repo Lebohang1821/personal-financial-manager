@@ -62,94 +62,97 @@ export default function Profile() {
         >
           <Image source={{ uri: profilePic }} style={styles.image} />
         </TouchableOpacity>
+
         <Text style={styles.heading}>Profile</Text>
-        <View style={styles.field}>
-          <Text style={styles.label}>Username:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={username}
-              onChangeText={setUsername}
-            />
-          ) : (
-            <Text style={styles.text}>{username}</Text>
-          )}
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.label}>Email:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-            />
-          ) : (
-            <Text style={styles.text}>{email}</Text>
-          )}
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.label}>Bio:</Text>
-          {isEditing ? (
-            <TextInput
-              style={[styles.input, styles.bioInput]}
-              multiline
-              value={bio}
-              onChangeText={setBio}
-            />
-          ) : (
-            <Text style={styles.text}>{bio}</Text>
-          )}
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.label}>Phone Number:</Text>
-          {isEditing ? (
-            <TextInput
-              style={styles.input}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              keyboardType="phone-pad"
-            />
-          ) : (
-            <Text style={styles.text}>{phoneNumber}</Text>
-          )}
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.label}>Bank Name:</Text>
-          {isEditing ? (
-            <Picker
-              style={styles.input}
-              selectedValue={bankName}
-              onValueChange={(itemValue) => setBankName(itemValue)}
-            >
-              <Picker.Item label="Select Bank" value="Select Bank" />
-              <Picker.Item label="Capitec" value="Capitec" />
-              <Picker.Item label="Standard Bank" value="Standard Bank" />
-              <Picker.Item label="FNB" value="FNB" />
-              <Picker.Item label="Time Bank" value="Time Bank" />
-              <Picker.Item label="ABSA" value="ABSA Bank" />
-              {/* Add more bank options as needed */}
-            </Picker>
-          ) : (
-            <Text style={styles.text}>{bankName}</Text>
-          )}
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.label}>Bank Type:</Text>
-          {isEditing ? (
-            <Picker
-              style={styles.input}
-              selectedValue={bankType}
-              onValueChange={(itemValue) => setBankType(itemValue)}
-            >
-              <Picker.Item label="Select Type" value="Select Type" />
-              <Picker.Item label="Savings" value="Savings" />
-              <Picker.Item label="Checking" value="Checking" />
-              <Picker.Item label="Investment" value="Investment" />
-              {/* Add more bank type options as needed */}
-            </Picker>
-          ) : (
-            <Text style={styles.text}>{bankType}</Text>
-          )}
+        <View style={styles.Profilecontainer}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Username:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={setUsername}
+              />
+            ) : (
+              <Text style={styles.text}>{username}</Text>
+            )}
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Email:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+              />
+            ) : (
+              <Text style={styles.text}>{email}</Text>
+            )}
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Bio:</Text>
+            {isEditing ? (
+              <TextInput
+                style={[styles.input, styles.bioInput]}
+                multiline
+                value={bio}
+                onChangeText={setBio}
+              />
+            ) : (
+              <Text style={styles.text}>{bio}</Text>
+            )}
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Phone Number:</Text>
+            {isEditing ? (
+              <TextInput
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                keyboardType="phone-pad"
+              />
+            ) : (
+              <Text style={styles.text}>{phoneNumber}</Text>
+            )}
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Bank Name:</Text>
+            {isEditing ? (
+              <Picker
+                style={styles.input}
+                selectedValue={bankName}
+                onValueChange={(itemValue) => setBankName(itemValue)}
+              >
+                <Picker.Item label="Select Bank" value="Select Bank" />
+                <Picker.Item label="Capitec" value="Capitec" />
+                <Picker.Item label="Standard Bank" value="Standard Bank" />
+                <Picker.Item label="FNB" value="FNB" />
+                <Picker.Item label="Time Bank" value="Time Bank" />
+                <Picker.Item label="ABSA" value="ABSA Bank" />
+                {/* Add more bank options as needed */}
+              </Picker>
+            ) : (
+              <Text style={styles.text}>{bankName}</Text>
+            )}
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Bank Type:</Text>
+            {isEditing ? (
+              <Picker
+                style={styles.input}
+                selectedValue={bankType}
+                onValueChange={(itemValue) => setBankType(itemValue)}
+              >
+                <Picker.Item label="Select Type" value="Select Type" />
+                <Picker.Item label="Savings" value="Savings" />
+                <Picker.Item label="Checking" value="Checking" />
+                <Picker.Item label="Investment" value="Investment" />
+                {/* Add more bank type options as needed */}
+              </Picker>
+            ) : (
+              <Text style={styles.text}>{bankType}</Text>
+            )}
+          </View>
         </View>
         {/* Render horizontal rule component */}
         <Hr />
@@ -175,6 +178,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
     backgroundColor: "#f9f9f9",
+  },
+  Profilecontainer: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    backgroundColor: "#b8b8b8",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 5,
+    // For Android elevation (box shadow)
+    elevation: 5,
+    // For iOS shadow
+    shadowColor: "#eeeeee",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   container: {
     alignItems: "center",
