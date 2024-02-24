@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: 50,
     backgroundColor: "#f9f9f9",
   },
   container: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   label: {
     width: 120,
-    marginRight: 10,
+    marginRight: 5,
     fontWeight: "bold",
   },
   text: {
