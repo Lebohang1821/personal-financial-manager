@@ -100,11 +100,11 @@ export default function App() {
                   style={{ alignItems: "center", justifyContent: "center" }}
                 >
                   <MaterialIcons
-                    name="stacked-line-chart"
+                    name={focused ? "person" : "person-outline"}
                     size={24}
                     color={focused ? "#16247d" : "#111"}
                   />
-                  <Text style={{ fonSize: 12, color: "#16247d" }}>PRICES</Text>
+                  <Text style={{ fonSize: 12, color: "#16247d" }}>PROFILE</Text>
                 </View>
               );
             },
