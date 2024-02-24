@@ -41,7 +41,7 @@ export default function App() {
           }}
           />
           <Tab.Screen 
-          name="Portfolio" 
+          name="Wallet" 
           component={Portfolio} 
           options={{
             tabBarIcon: ({focused})=>{
@@ -78,14 +78,14 @@ export default function App() {
            }}
           />
           <Tab.Screen
-           name="Prices" 
+           name="Profile" 
            component={Prices}
            options={{
             tabBarIcon: ({focused})=>{
               return (
                 <View style={{alignItems: "center", justifyContent: "center"}}> 
                  <MaterialIcons name="stacked-line-chart" size={24} color={focused ? "#16247d": "#111"} />
-                  <Text style={{fonSize: 12, color: "#16247d"}}>PRICES</Text>
+                  <Text style={{fonSize: 12, color: "#16247d"}}>PROFILE</Text>
             </View>
               )
             }
