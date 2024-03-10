@@ -111,12 +111,12 @@ function Mockup() {
       bank: "Capitec",
       type: "money in",
       amount: 1500,
-      savings: -500,
+      savings: +500,
       available: 1490,
     },
     {
       bank: "Capitec",
-      type: "money in",
+      type: "money out",
       amount: 1500,
       savings: -500,
       available: 1490,
@@ -125,7 +125,7 @@ function Mockup() {
       bank: "Capitec",
       type: "money in",
       amount: 1500,
-      savings: -500,
+      savings: +500,
       available: 1490,
     },
     {
@@ -177,7 +177,7 @@ function Mockup() {
           <Text style={mockupStyles.label}>R 5000 saved this month</Text>
         </View>
         <View style={mockupStyles.labelContainer}>
-          <Text style={mockupStyles.label}>R 5000 saved last month</Text>
+          <Text style={mockupStyles.label}>R 3000 saved last month</Text>
         </View>
       </View>
     </View>
