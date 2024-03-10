@@ -16,7 +16,7 @@ const accountsData = [
     accountNumber: '987654321',
     cardNumber: '**** **** **** 5678',
     balance: 2500,
-    logo: require('./assets/standard_bank_logo.png'), // Import Standard Bank logo
+    logo: require('./assets/standard_bank_logo.png'),
   },
   // Add more accounts as needed
 ];
