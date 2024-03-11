@@ -94,7 +94,7 @@ function Mockup() {
       bank: "ABSA",
       transactions: [
         { type: "initial", amount: 15000 },
-        { type: "swiping", amount: 3290 },
+        { type: "swiping", amount: 3790 },
         { type: "online shopping", amount: 2580 },
       ],
     },
