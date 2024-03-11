@@ -95,7 +95,7 @@ function Mockup() {
       transactions: [
         { type: "initial", amount: 15000 },
         { type: "swiping", amount: 3290 },
-        { type: "online shopping", amount: 2500 },
+        { type: "online shopping", amount: 2580 },
       ],
     },
     // Add more banks and transactions as needed
