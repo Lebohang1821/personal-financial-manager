@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     // For Android elevation (box shadow)
     elevation: 5,
     // For iOS shadow
-    shadowColor: "#ff0000",
+    shadowColor: "#000000",
     shadowOffset: {
       width: 0,
       height: 10,
