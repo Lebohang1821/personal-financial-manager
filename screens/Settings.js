@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Switch, TouchableOpacity, Alert, Picker } from 'react-native';
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Switch,
+  TouchableOpacity,
+  Alert,
+  Picker,
+} from "react-native";
 
 export default function Settings() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [username, setUsername] = useState('');
-  const [selectedTheme, setSelectedTheme] = useState('light');
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [username, setUsername] = useState("");
+  const [selectedTheme, setSelectedTheme] = useState("light");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
 
   const saveSettings = async () => {
     // Simulating backend interaction, replace with actual API calls
     try {
       // Assume settings are saved successfully
-      Alert.alert('Settings Saved', 'Your settings have been saved successfully.');
+      Alert.alert(
+        "Settings Saved",
+        "Your settings have been saved successfully."
+      );
     } catch (error) {
-      Alert.alert('Error', 'Failed to save settings. Please try again later.');
+      Alert.alert("Error", "Failed to save settings. Please try again later.");
     }
   };
 
@@ -23,9 +33,9 @@ export default function Settings() {
     // Simulating backend interaction, replace with actual API calls
     try {
       // Assume logout is successful
-      Alert.alert('Logged Out', 'You have been logged out successfully.');
+      Alert.alert("Logged Out", "You have been logged out successfully.");
     } catch (error) {
-      Alert.alert('Error', 'Failed to logout. Please try again later.');
+      Alert.alert("Error", "Failed to logout. Please try again later.");
     }
   };
 
@@ -38,22 +48,24 @@ export default function Settings() {
   return (
     <View style={[styles.container, theme.container]}>
       <Text style={[styles.title, theme.title]}>Settings</Text>
-      
+
       <View style={[styles.settingContainer, theme.settingContainer]}>
-        <Text style={[styles.settingLabel, theme.settingLabel]}>Enable Notifications</Text>
+        <Text style={[styles.settingLabel, theme.settingLabel]}>
+          Enable Notifications
+        </Text>
         <Switch
           value={notificationsEnabled}
-          onValueChange={value => setNotificationsEnabled(value)}
+          onValueChange={(value) => setNotificationsEnabled(value)}
         />
       </View>
-      
+
       <View style={[styles.settingContainer, theme.settingContainer]}>
         <Text style={[styles.settingLabel, theme.settingLabel]}>Username</Text>
         <TextInput
           style={[styles.input, theme.input]}
           placeholder="Enter your username"
           value={username}
-          onChangeText={text => setUsername(text)}
+          onChangeText={(text) => setUsername(text)}
         />
       </View>
 
@@ -61,71 +73,73 @@ export default function Settings() {
 
       <View style={[styles.settingContainer, theme.settingContainer]}>
         <Text style={[styles.settingLabel, theme.settingLabel]}>Dark Mode</Text>
-        <Switch
-          value={darkModeEnabled}
-          onValueChange={handleToggleDarkMode}
-        />
+        <Switch value={darkModeEnabled} onValueChange={handleToggleDarkMode} />
       </View>
 
-      <TouchableOpacity style={[styles.button, theme.button]} onPress={saveSettings}>
+      <TouchableOpacity
+        style={[styles.button, theme.button]}
+        onPress={saveSettings}
+      >
         <Text style={[styles.buttonText, theme.buttonText]}>Save Settings</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, theme.button]} onPress={handleLogout}>
+      <TouchableOpacity
+        style={[styles.button, theme.button]}
+        onPress={handleLogout}
+      >
         <Text style={[styles.buttonText, theme.buttonText]}>Logout</Text>
       </TouchableOpacity>
 
       {/* Add other buttons/components */}
-
     </View>
   );
 }
 
 const lightTheme = {
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
   },
   title: {
-    color: '#000000',
+    color: "#000000",
   },
   settingContainer: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#b8b8b8",
   },
   settingLabel: {
-    color: '#000000',
+    color: "#000000",
   },
   input: {
-    color: '#000000',
+    color: "#000000",
   },
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: "#007bff",
   },
   buttonText: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
 };
 
 const darkTheme = {
   container: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: "#1a1a1a",
   },
   title: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
   settingContainer: {
-    backgroundColor: '#303030',
+    backgroundColor: "#303030",
   },
   settingLabel: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
   input: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: "#007bff",
   },
   buttonText: {
-    color: '#ffffff',
+    color: "#ffffff",
   },
 };
 
@@ -136,7 +150,7 @@ const styles = {
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   settingContainer: {
@@ -157,7 +171,7 @@ const styles = {
   button: {
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   buttonText: {
