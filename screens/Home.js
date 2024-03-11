@@ -86,7 +86,7 @@ function Mockup() {
       bank: "Capitec",
       transactions: [
         { type: "initial", amount: 10000 },
-        { type: "swiping", amount: 2000 },
+        { type: "card payment", amount: 5120 },
         { type: "online shopping", amount: 1500 },
       ],
     },
@@ -94,7 +94,7 @@ function Mockup() {
       bank: "ABSA",
       transactions: [
         { type: "initial", amount: 15000 },
-        { type: "swiping", amount: 1000 },
+        { type: "swiping", amount: 3290 },
         { type: "online shopping", amount: 2500 },
       ],
     },
@@ -136,15 +136,14 @@ function Mockup() {
                   key={idx}
                   style={[
                     mockupStyles.transactionContainer,
-                    transaction.type === "swiping" || transaction.type === "online shopping"
+                    (transaction.type === "swiping" || transaction.type === "online shopping" || transaction.type === "card payment")
                       ? mockupStyles.badSavings
                       : null,
                   ]}
                 >
                   <Text style={mockupStyles.transactionText}>
                     {transaction.type.charAt(0).toUpperCase() +
-                      transaction.type.slice(1)}{" "}
-                    - Amount: R {transaction.amount}
+                      transaction.type.slice(1)} - Amount: R {transaction.amount}
                   </Text>
                 </View>
               ))}
