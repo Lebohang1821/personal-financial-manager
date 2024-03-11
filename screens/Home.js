@@ -82,7 +82,7 @@ export default function Home() {
     <ScrollView contentContainerStyle={homeStyles.container}>
       <View>
         <Text style={homeStyles.heading}>
-          Welcome to{"\n"}
+          Welcome back to{"\n"}
           <Text style={{ fontSize: 28 }}>Personal Finance Manager</Text>
         </Text>
         <Text style={homeStyles.description}>
