@@ -87,7 +87,7 @@ function Mockup() {
       transactions: [
         { type: "initial", amount: 10000 },
         { type: "card payment", amount: 5993 },
-        { type: "online shopping", amount: 1500 },
+        { type: "online shopping", amount: 1540 },
       ],
     },
     {
