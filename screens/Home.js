@@ -86,7 +86,7 @@ function Mockup() {
       bank: "Capitec",
       transactions: [
         { type: "initial", amount: 10000 },
-        { type: "card payment", amount: 5990 },
+        { type: "card payment", amount: 5993 },
         { type: "online shopping", amount: 1500 },
       ],
     },
