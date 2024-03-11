@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import moment from 'moment'; // Import moment library
+import React, { useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import moment from "moment"; // Import moment library
 import { Entypo } from "@expo/vector-icons";
 
 export default function Transaction() {
@@ -38,7 +38,7 @@ export default function Transaction() {
     },
     {
       id: 4,
-      date: new Date('2024-02-10'),
+      date: new Date("2024-02-10"),
       bank: "Capitec",
       type: "money in",
       amount: 1500,
@@ -48,7 +48,7 @@ export default function Transaction() {
     },
     {
       id: 5,
-      date: new Date('2024-02-15'),
+      date: new Date("2024-02-15"),
       bank: "Capitec",
       type: "money out",
       amount: 2000,
@@ -58,7 +58,7 @@ export default function Transaction() {
     },
     {
       id: 6,
-      date: new Date('2024-03-05'),
+      date: new Date("2024-03-05"),
       bank: "ABSA",
       type: "money in",
       amount: 3000,
@@ -68,7 +68,7 @@ export default function Transaction() {
     },
     {
       id: 7,
-      date: new Date('2024-03-12'),
+      date: new Date("2024-03-12"),
       bank: "FNB",
       type: "money in",
       amount: 2500,
@@ -81,8 +81,8 @@ export default function Transaction() {
   // Function to group transactions by month
   const groupTransactionsByMonth = () => {
     const groupedTransactions = {};
-    transactions.forEach(transaction => {
-      const monthYear = moment(transaction.date).format('MMMM YYYY');
+    transactions.forEach((transaction) => {
+      const monthYear = moment(transaction.date).format("MMMM YYYY");
       if (!groupedTransactions[monthYear]) {
         groupedTransactions[monthYear] = [];
       }
@@ -96,43 +96,99 @@ export default function Transaction() {
 
   // Function to handle click on a transaction
   const handleTransactionClick = (transaction) => {
-    setExpandedTransaction(transaction.id === expandedTransaction ? null : transaction.id);
+    setExpandedTransaction(
+      transaction.id === expandedTransaction ? null : transaction.id
+    );
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      {Object.entries(groupedTransactions).map(([monthYear, transactionsForMonth]) => (
-        <View key={monthYear} style={{ marginBottom: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>
-            {monthYear}
-          </Text>
-          {transactionsForMonth.map(transaction => (
-            <TouchableOpacity key={`${monthYear}-${transaction.id}`} onPress={() => handleTransactionClick(transaction)}>
-              <View style={{ backgroundColor: transaction.type === 'money in' ? '#32CD32' : 'red', padding: 10, marginVertical: 5 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Entypo name={transaction.type === 'money in' ? 'arrow-with-circle-up' : 'arrow-with-circle-down'} size={24} color="#fff" style={{ marginRight: 10 }} />
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
-                      {moment(transaction.date).format('MMMM Do YYYY, h:mm:ss a')}
+    <ScrollView style={{ flex: 1, padding: 15 }}>
+      {Object.entries(groupedTransactions).map(
+        ([monthYear, transactionsForMonth]) => (
+          <View key={monthYear} style={{ marginBottom: 20 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                textAlign: "center",
+                marginVertical: 10,
+              }}
+            >
+              {monthYear}
+            </Text>
+            {transactionsForMonth.map((transaction) => (
+              <TouchableOpacity
+                key={`${monthYear}-${transaction.id}`}
+                onPress={() => handleTransactionClick(transaction)}
+              >
+                <View
+                  style={{
+                    backgroundColor:
+                      transaction.type === "money in" ? "#32CD32" : "red",
+                    padding: 10,
+                    marginVertical: 5,
+                    borderRadius: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Entypo
+                        name={
+                          transaction.type === "money in"
+                            ? "arrow-with-circle-up"
+                            : "arrow-with-circle-down"
+                        }
+                        size={24}
+                        color="#fff"
+                        style={{ marginRight: 10 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontWeight: "bold",
+                          color: "#fff",
+                        }}
+                      >
+                        {moment(transaction.date).format(
+                          "MMMM Do YYYY, h:mm:ss a"
+                        )}
+                      </Text>
+                    </View>
+                    <Text style={{ fontSize: 16, color: "#fff" }}>
+                      {transaction.type === "money in" ? "+" : "-"} R{" "}
+                      {Math.abs(transaction.amount)}
                     </Text>
                   </View>
-                  <Text style={{ fontSize: 16, color: '#fff' }}>
-                    {transaction.type === 'money in' ? '+' : '-'} R {Math.abs(transaction.amount)}
-                  </Text>
+                  {expandedTransaction === transaction.id && (
+                    <View style={{ marginTop: 10 }}>
+                      <Text style={{ color: "#fff" }}>
+                        Bank: {transaction.bank}
+                      </Text>
+                      <Text style={{ color: "#fff" }}>
+                        Description: {transaction.description}
+                      </Text>
+                      <Text style={{ color: "#fff" }}>
+                        Savings: R {transaction.savings}
+                      </Text>
+                      <Text style={{ color: "#fff" }}>
+                        Available amount: R {transaction.available}
+                      </Text>
+                    </View>
+                  )}
                 </View>
-                {expandedTransaction === transaction.id && (
-                  <View style={{ marginTop: 10 }}>
-                    <Text style={{ color: '#fff' }}>Bank: {transaction.bank}</Text>
-                    <Text style={{ color: '#fff' }}>Description: {transaction.description}</Text>
-                    <Text style={{ color: '#fff' }}>Savings: R {transaction.savings}</Text>
-                    <Text style={{ color: '#fff' }}>Available amount: R {transaction.available}</Text>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ))}
+              </TouchableOpacity>
+            ))}
+          </View>
+        )
+      )}
     </ScrollView>
   );
 }
