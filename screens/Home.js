@@ -92,7 +92,6 @@ function Mockup() {
       transactions: [
         { type: "initial", amount: 10000 },
         { type: "card payment", amount: 5120 },
-        { type: "swiping", amount: 3290 },
         { type: "online shopping", amount: 1500 },
       ],
     },
@@ -100,7 +99,6 @@ function Mockup() {
       bank: "ABSA",
       transactions: [
         { type: "initial", amount: 15000 },
-        { type: "card payment", amount: 5120 },
         { type: "swiping", amount: 3290 },
         { type: "online shopping", amount: 2500 },
       ],
