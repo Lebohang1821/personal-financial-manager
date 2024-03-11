@@ -74,130 +74,92 @@ export default function Home() {
           Explore our app's features and take control of your finances like
           never before.
         </Text>
-        <CurrentMonthTransactions />
-        <LastMonthTransactions />
+        <Mockup />
       </View>
     </ScrollView>
   );
 }
 
-function CurrentMonthTransactions() {
-  const [currentMonthTransactions, setCurrentMonthTransactions] = useState([
+function Mockup() {
+  const [transactions, setTransactions] = useState([
     {
       bank: "Capitec",
-      type: "money in",
-      amount: 1500,
-      savings: +500,
-      available: 1490,
+      transactions: [
+        { type: "initial", amount: 10000 },
+        { type: "swiping", amount: 2000 },
+        { type: "online shopping", amount: 1500 },
+      ],
     },
     {
       bank: "ABSA",
-      type: "money out",
-      amount: 2000,
-      savings: -300,
-      available: 1200,
+      transactions: [
+        { type: "initial", amount: 15000 },
+        { type: "swiping", amount: 1000 },
+        { type: "online shopping", amount: 2500 },
+      ],
     },
-    // Add more transactions as needed
+    // Add more banks and transactions as needed
   ]);
 
-  const calculateTotalSavings = (transactions) => {
-    return transactions.reduce((total, transaction) => {
-      if (transaction.type === "money in") {
-        return total + transaction.savings;
+  function calculateAvailableAmount(transactions) {
+    return transactions.reduce((acc, cur) => {
+      if (cur.type === "initial") {
+        return acc + cur.amount;
       } else {
-        return total;
+        return acc - cur.amount;
       }
     }, 0);
-  };
+  }
 
-  const currentMonthTotalSavings = calculateTotalSavings(
-    currentMonthTransactions
-  );
-  const currentMonthSavings = currentMonthTotalSavings >= 0 ? "good" : "bad";
-
-  return (
-    <View style={mockupStyles.mockupContainer}>
-      <Text style={mockupStyles.label}>Current Month's Transactions</Text>
-      <ScrollView>
-        {currentMonthTransactions.map((transaction, index) => (
-          <View
-            style={[
-              mockupStyles.transactionContainer,
-              transaction.type === "money out"
-                ? mockupStyles.badSavings
-                : mockupStyles.goodSavings,
-            ]}
-            key={index}
-          >
-            <Text style={mockupStyles.transactionText}>
-              {transaction.bank} - {transaction.type.toUpperCase()}{" "}
-              Savings: R {transaction.savings} Available amount: R{" "}
-              {transaction.available}
-            </Text>
-          </View>
-        ))}
-      </ScrollView>
-      <Text style={mockupStyles.label}>
-        Total Savings for Current Month: R {currentMonthTotalSavings}
-      </Text>
-      <Text style={mockupStyles.label}>
-        {currentMonthSavings === "good" ? "Good" : "Bad"} Savings This Month
-      </Text>
-    </View>
-  );
-}
-
-function LastMonthTransactions() {
-  const [lastMonthTransactions, setLastMonthTransactions] = useState([
-    {
-      bank: "FNB",
-      type: "money in",
-      amount: 3000,
-      savings: -1000,
-      available: 2000,
-    },
-    // Add more transactions for last month as needed
-  ]);
-
-  const calculateTotalSavings = (transactions) => {
-    return transactions.reduce((total, transaction) => {
-      if (transaction.type === "money in") {
-        return total + transaction.savings;
+  function calculateTotalSavings(transactions) {
+    return transactions.reduce((acc, cur) => {
+      if (cur.type === "initial") {
+        return acc + cur.amount;
       } else {
-        return total;
+        return acc - cur.amount;
       }
     }, 0);
-  };
-
-  const lastMonthTotalSavings = calculateTotalSavings(lastMonthTransactions);
-  const lastMonthSavings = lastMonthTotalSavings >= 0 ? "good" : "bad";
+  }
 
   return (
-    <View style={mockupStyles.mockupContainer}>
-      <Text style={mockupStyles.label}>Last Month's Transactions</Text>
-      <ScrollView>
-        {lastMonthTransactions.map((transaction, index) => (
-          <View
-            style={[
-              mockupStyles.transactionContainer,
-              mockupStyles.badSavings,
-            ]}
-            key={index}
-          >
+    <View>
+      {transactions.map((bank, index) => (
+        <View key={index} style={mockupStyles.mockupContainer}>
+          <Text style={mockupStyles.label}>{bank.bank} Transactions</Text>
+          <View>
             <Text style={mockupStyles.transactionText}>
-              {transaction.bank} - {transaction.type.toUpperCase()}{" "}
-              Savings: R {transaction.savings} Available amount: R{" "}
-              {transaction.available}
+              Available Amount: R {calculateAvailableAmount(bank.transactions)}
             </Text>
+            <ScrollView>
+              {bank.transactions.map((transaction, idx) => (
+                <View
+                  key={idx}
+                  style={[
+                    mockupStyles.transactionContainer,
+                    transaction.type === "swiping" || transaction.type === "online shopping"
+                      ? mockupStyles.badSavings
+                      : null,
+                  ]}
+                >
+                  <Text style={mockupStyles.transactionText}>
+                    {transaction.type.charAt(0).toUpperCase() +
+                      transaction.type.slice(1)}{" "}
+                    - Amount: R {transaction.amount}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
           </View>
-        ))}
-      </ScrollView>
-      <Text style={mockupStyles.label}>
-        Total Savings for Last Month: R {lastMonthTotalSavings}
-      </Text>
-      <Text style={mockupStyles.label}>
-        {lastMonthSavings === "good" ? "Good" : "Bad"} Savings Last Month
-      </Text>
+          <Text style={mockupStyles.label}>
+            Total Savings: R {calculateTotalSavings(bank.transactions)}
+          </Text>
+          <Text style={mockupStyles.label}>
+            {calculateTotalSavings(bank.transactions) >= 0
+              ? "Good Savings"
+              : "Bad Savings"}
+          </Text>
+        </View>
+      ))}
     </View>
   );
 }
