@@ -28,9 +28,10 @@ export default function Wallet() {
         style={{
           padding: 20,
           borderBottomWidth: 2,
-          borderBottomColor: "#ccc",
           flexDirection: "row",
           alignItems: "center",
+          backgroundColor: "#b8b8b8",
+          borderRadius: 10,
         }}
       >
         <Image

@@ -30,6 +30,7 @@ const mockupStyles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     shadowColor: "#000",
+    borderBottomWidth: 2,
     shadowOffset: {
       width: 0,
       height: 2,

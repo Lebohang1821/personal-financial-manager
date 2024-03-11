@@ -127,6 +127,7 @@ export default function Transaction() {
                       transaction.type === "money in" ? "#32CD32" : "red",
                     padding: 10,
                     marginVertical: 5,
+                    borderBottomWidth: 2,
                     borderRadius: 10,
                   }}
                 >

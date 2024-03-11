@@ -104,6 +104,7 @@ const lightTheme = {
   },
   settingContainer: {
     backgroundColor: "#b8b8b8",
+    borderBottomWidth: 2,
   },
   settingLabel: {
     color: "#000000",
