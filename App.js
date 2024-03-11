@@ -8,13 +8,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "./screens/Home";
-import Portfolio from "./screens/Portfolio";
+import Wallet from "./screens/Wallet";
 import Transaction from "./screens/Transaction";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ThemeProvider } from './SRC/Components/ThemeProvider'; // Check the path to your ThemeProvider component
+import { ThemeProvider } from "./SRC/Components/ThemeProvider"; // Check the path to your ThemeProvider component
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +27,12 @@ export default function App() {
 
   return (
     <ThemeProvider darkMode={darkModeEnabled}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: darkModeEnabled ? "#1a1a1a" : "#f0f0f0" }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: darkModeEnabled ? "#1a1a1a" : "#f0f0f0",
+        }}
+      >
         <NavigationContainer>
           <Tab.Navigator
             screenOptions={{
@@ -70,8 +75,8 @@ export default function App() {
               }}
             />
             <Tab.Screen
-              name="Portfolio"
-              component={Portfolio}
+              name="Wallet"
+              component={Wallet}
               options={{
                 tabBarIcon: ({ focused }) => (
                   <View
