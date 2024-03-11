@@ -26,18 +26,17 @@ const homeStyles = StyleSheet.create({
 const mockupStyles = StyleSheet.create({
   mockupContainer: {
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#919191",
     borderRadius: 10,
     marginBottom: 20,
     shadowColor: "#000",
-    borderBottomWidth: 2,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 5, // Android shadow
   },
   label: {
     fontSize: 18,
@@ -49,6 +48,14 @@ const mockupStyles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // Android shadow
   },
   initial: {
     backgroundColor: "#00d9ff",
