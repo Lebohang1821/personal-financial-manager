@@ -36,7 +36,7 @@ export default function Wallet() {
       >
         <Image
           source={item.logo}
-          style={{ width: 50, height: 80, marginRight: 10 }}
+          style={{ width: 80, height: 90, marginRight: 10 }}
         />
         <View>
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>

@@ -66,7 +66,7 @@ const mockupStyles = StyleSheet.create({
     backgroundColor: "orange",
   },
   swiping: {
-    backgroundColor: "red",
+    backgroundColor: "#40e0d0",
   },
   onlineShopping: {
     backgroundColor: "yellow",
