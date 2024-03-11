@@ -42,7 +42,7 @@ const mockupStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#4CAF50",
+    color: "#000000",
   },
   transactionContainer: {
     padding: 10,
