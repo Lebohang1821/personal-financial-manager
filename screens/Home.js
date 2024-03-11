@@ -98,7 +98,7 @@ export default function Home() {
 function Mockup() {
   const [transactions, setTransactions] = useState([
     {
-      bank: "Capitec",
+      bank: "ABSA",
       transactions: [
         { type: "initial", amount: 10000 },
         { type: "card payment", amount: 5120 },
@@ -106,7 +106,7 @@ function Mockup() {
       ],
     },
     {
-      bank: "ABSA",
+      bank: "Standard Bank",
       transactions: [
         { type: "initial", amount: 15000 },
         { type: "swiping", amount: 3290 },
