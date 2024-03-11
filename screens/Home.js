@@ -45,16 +45,21 @@ const mockupStyles = StyleSheet.create({
     color: "#4CAF50",
   },
   transactionContainer: {
-    backgroundColor: "#E3F2FD",
     padding: 10,
     borderRadius: 8,
     marginBottom: 10,
   },
-  badSavings: {
-    backgroundColor: "#FFCDD2", // Red color for bad savings
+  initial: {
+    backgroundColor: "#00d9ff",
   },
-  goodSavings: {
-    backgroundColor: "#C8E6C9", // Green color for good savings
+  cardPayment: {
+    backgroundColor: "orange",
+  },
+  swiping: {
+    backgroundColor: "red",
+  },
+  onlineShopping: {
+    backgroundColor: "yellow",
   },
   transactionText: {
     fontSize: 16,
@@ -87,6 +92,7 @@ function Mockup() {
       transactions: [
         { type: "initial", amount: 10000 },
         { type: "card payment", amount: 5120 },
+        { type: "swiping", amount: 3290 },
         { type: "online shopping", amount: 1500 },
       ],
     },
@@ -94,6 +100,7 @@ function Mockup() {
       bank: "ABSA",
       transactions: [
         { type: "initial", amount: 15000 },
+        { type: "card payment", amount: 5120 },
         { type: "swiping", amount: 3290 },
         { type: "online shopping", amount: 2500 },
       ],
@@ -136,14 +143,21 @@ function Mockup() {
                   key={idx}
                   style={[
                     mockupStyles.transactionContainer,
-                    (transaction.type === "swiping" || transaction.type === "online shopping" || transaction.type === "card payment")
-                      ? mockupStyles.badSavings
+                    transaction.type === "initial"
+                      ? mockupStyles.initial
+                      : transaction.type === "card payment"
+                      ? mockupStyles.cardPayment
+                      : transaction.type === "swiping"
+                      ? mockupStyles.swiping
+                      : transaction.type === "online shopping"
+                      ? mockupStyles.onlineShopping
                       : null,
                   ]}
                 >
                   <Text style={mockupStyles.transactionText}>
                     {transaction.type.charAt(0).toUpperCase() +
-                      transaction.type.slice(1)} - Amount: R {transaction.amount}
+                      transaction.type.slice(1)}{" "}
+                    - Amount: R {transaction.amount}
                   </Text>
                 </View>
               ))}
