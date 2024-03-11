@@ -26,12 +26,14 @@ export default function Wallet() {
     <View style={{ padding: 10 }}>
       <View
         style={{
-          padding: 20,
+          padding: 15,
           borderBottomWidth: 2,
           flexDirection: "row",
+          marginBottom: -10,
           alignItems: "center",
           backgroundColor: "#b8b8b8",
           borderRadius: 10,
+          marginTop: 10,
         }}
       >
         <Image
