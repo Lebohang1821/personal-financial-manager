@@ -1,85 +1,64 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 const homeStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 40, // Adjust paddingTop as needed
+    paddingTop: 40,
+    backgroundColor: "#f0f0f0",
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    marginTop: -50,
-    color: "red",
+    color: "#4CAF50",
   },
   description: {
     fontSize: 16,
     textAlign: "center",
-    marginBottom: 10,
-    justifyContent: "flex-start",
-    backgroundColor: "#919191",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 5,
-    color: "#e3f0f0",
-    elevation: 5,
-    // For iOS shadow
-    shadowColor: "#ff0000",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    textDecorationLine: "underline",
+    marginBottom: 20,
+    color: "#313131",
   },
 });
 
 const mockupStyles = StyleSheet.create({
   mockupContainer: {
-    marginTop: 10,
-    padding: 2,
-  },
-  labelContainer: {
-    marginBottom: 4,
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   label: {
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 0,
+    marginBottom: 10,
+    color: "#4CAF50",
   },
   transactionContainer: {
-    marginBottom: 10,
-    backgroundColor: "#a88686",
+    backgroundColor: "#E3F2FD",
     padding: 10,
-    borderRadius: 10,
-    marginBottom: 5,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  badSavings: {
+    backgroundColor: "#FFCDD2", // Red color for bad savings
+  },
+  goodSavings: {
+    backgroundColor: "#C8E6C9", // Green color for good savings
   },
   transactionText: {
     fontSize: 16,
     color: "#313131",
-  },
-  topContainer: {
-    backgroundColor: "#ccc",
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-    marginTop: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    backgroundColor: "#fff5ee",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    color: "black", // Change input text color if needed
-    marginTop: 10,
-    marginBottom: 10,
-    width: "100%", // Adjust width as needed
-    height: 190, // Adjust height as needed
   },
 });
 
@@ -87,26 +66,23 @@ export default function Home() {
   return (
     <ScrollView contentContainerStyle={homeStyles.container}>
       <View>
-        <Text style={{ textAlign: "center" }}>
-          <Text style={[homeStyles.heading, { fontSize: 54 }]}>
-            Welcome to{"\n"}
-          </Text>
-          <Text style={[homeStyles.heading, { fontSize: 19 }]}>
-            Personal Finance Manager
-          </Text>
+        <Text style={homeStyles.heading}>
+          Welcome to{"\n"}
+          <Text style={{ fontSize: 28 }}>Personal Finance Manager</Text>
         </Text>
         <Text style={homeStyles.description}>
           Explore our app's features and take control of your finances like
           never before.
         </Text>
-        <Mockup />
+        <CurrentMonthTransactions />
+        <LastMonthTransactions />
       </View>
     </ScrollView>
   );
 }
 
-function Mockup() {
-  const [transactions, setTransactions] = useState([
+function CurrentMonthTransactions() {
+  const [currentMonthTransactions, setCurrentMonthTransactions] = useState([
     {
       bank: "Capitec",
       type: "money in",
@@ -115,91 +91,113 @@ function Mockup() {
       available: 1490,
     },
     {
-      bank: "Capitec",
+      bank: "ABSA",
       type: "money out",
-      amount: 1500,
-      savings: -500,
-      available: 1490,
-    },
-    {
-      bank: "Capitec",
-      type: "money in",
-      amount: 1500,
-      savings: +500,
-      available: 1490,
-    },
-    {
-      bank: "Capitec",
-      type: "money in",
-      amount: 1500,
-      savings: -500,
-      available: 1490,
+      amount: 2000,
+      savings: -300,
+      available: 1200,
     },
     // Add more transactions as needed
   ]);
 
+  const calculateTotalSavings = (transactions) => {
+    return transactions.reduce((total, transaction) => {
+      if (transaction.type === "money in") {
+        return total + transaction.savings;
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+
+  const currentMonthTotalSavings = calculateTotalSavings(
+    currentMonthTransactions
+  );
+  const currentMonthSavings = currentMonthTotalSavings >= 0 ? "good" : "bad";
+
   return (
-    <View style={styles.container}>
-      <View style={mockupStyles.mockupContainer}>
-        <View style={mockupStyles.labelContainer}>
-          <Text>
-            <Text style={{ fontWeight: "bold" }}>Bank Name:</Text> Capitec Bank
-          </Text>
-        </View>
-        {/* Wrap the text within a <Text> component */}
-        <Text style={mockupStyles.label}>Output of savings</Text>
-
-        <View style={mockupStyles.topContainer}>
-          <ScrollView
-            contentContainerStyle={{
-              paddingTop: 10,
-              paddingBottom: 10,
-            }}
+    <View style={mockupStyles.mockupContainer}>
+      <Text style={mockupStyles.label}>Current Month's Transactions</Text>
+      <ScrollView>
+        {currentMonthTransactions.map((transaction, index) => (
+          <View
+            style={[
+              mockupStyles.transactionContainer,
+              transaction.type === "money out"
+                ? mockupStyles.badSavings
+                : mockupStyles.goodSavings,
+            ]}
+            key={index}
           >
-            <View style={mockupStyles.container}>
-              {transactions.slice(0, 3).map((transaction, index) => (
-                <View style={mockupStyles.transactionContainer} key={index}>
-                  <Text style={mockupStyles.transactionText}>
-                    {transaction.bank} - {transaction.type.toUpperCase()}{" "}
-                    Savings: R {transaction.savings} Available amount: R{" "}
-                    {transaction.available}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </ScrollView>
-        </View>
-
-        <View style={mockupStyles.labelContainer}>
-          <Text style={mockupStyles.label}>Bad savings for this month</Text>
-        </View>
-        <View style={mockupStyles.labelContainer}>
-          <Text style={mockupStyles.label}>R 5000 saved this month</Text>
-        </View>
-        <View style={mockupStyles.labelContainer}>
-          <Text style={mockupStyles.label}>R 3000 saved last month</Text>
-        </View>
-      </View>
+            <Text style={mockupStyles.transactionText}>
+              {transaction.bank} - {transaction.type.toUpperCase()}{" "}
+              Savings: R {transaction.savings} Available amount: R{" "}
+              {transaction.available}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+      <Text style={mockupStyles.label}>
+        Total Savings for Current Month: R {currentMonthTotalSavings}
+      </Text>
+      <Text style={mockupStyles.label}>
+        {currentMonthSavings === "good" ? "Good" : "Bad"} Savings This Month
+      </Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "flex-start",
-    backgroundColor: "#919191",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 5,
-    // For Android elevation (box shadow)
-    elevation: 5,
-    // For iOS shadow
-    shadowColor: "#ff0000",
-    shadowOffset: {
-      width: 0,
-      height: 10,
+function LastMonthTransactions() {
+  const [lastMonthTransactions, setLastMonthTransactions] = useState([
+    {
+      bank: "FNB",
+      type: "money in",
+      amount: 3000,
+      savings: -1000,
+      available: 2000,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-});
+    // Add more transactions for last month as needed
+  ]);
+
+  const calculateTotalSavings = (transactions) => {
+    return transactions.reduce((total, transaction) => {
+      if (transaction.type === "money in") {
+        return total + transaction.savings;
+      } else {
+        return total;
+      }
+    }, 0);
+  };
+
+  const lastMonthTotalSavings = calculateTotalSavings(lastMonthTransactions);
+  const lastMonthSavings = lastMonthTotalSavings >= 0 ? "good" : "bad";
+
+  return (
+    <View style={mockupStyles.mockupContainer}>
+      <Text style={mockupStyles.label}>Last Month's Transactions</Text>
+      <ScrollView>
+        {lastMonthTransactions.map((transaction, index) => (
+          <View
+            style={[
+              mockupStyles.transactionContainer,
+              mockupStyles.badSavings,
+            ]}
+            key={index}
+          >
+            <Text style={mockupStyles.transactionText}>
+              {transaction.bank} - {transaction.type.toUpperCase()}{" "}
+              Savings: R {transaction.savings} Available amount: R{" "}
+              {transaction.available}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+      <Text style={mockupStyles.label}>
+        Total Savings for Last Month: R {lastMonthTotalSavings}
+      </Text>
+      <Text style={mockupStyles.label}>
+        {lastMonthSavings === "good" ? "Good" : "Bad"} Savings Last Month
+      </Text>
+    </View>
+  );
+}
