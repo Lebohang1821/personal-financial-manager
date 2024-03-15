@@ -10,7 +10,7 @@ The Personal Financial Manager app provides a comprehensive set of features to h
 - **Final Project Blog Article:** [Managing Finances with Personal Financial Manager](https://www.example.com/blog)
 - **Authors:** Motekema Mahlanya ([LinkedIn](https://www.linkedin.com/in/motekemamahlanya)), Joshua Chikasha ([LinkedIn](https://www.linkedin.com/in/joshua-chikasha))
 
-![Screenshot](./screenshot.png)![feature1](https://github.com/Lebohang1821/personal-financial-manager/assets/133529043/b3b97eca-831b-4f9a-bd31-852ce06f6456)
+[feature1](https://github.com/Lebohang1821/personal-financial-manager/assets/133529043/b3b97eca-831b-4f9a-bd31-852ce06f6456)
 
 
 ## Inspiration and Motivation
