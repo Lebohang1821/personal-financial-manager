@@ -78,5 +78,3 @@ Check out these related projects:
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-This README.md provides a comprehensive overview of the Personal Financial Manager app, including its inspiration, technical details, challenges faced during development, future enhancements, and contribution guidelines. Additionally, it includes a screenshot of the app and links to related projects for further exploration.
