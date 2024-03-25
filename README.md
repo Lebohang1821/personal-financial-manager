@@ -7,7 +7,7 @@ Welcome to the Personal Financial Manager, a mobile application designed to empo
 The Personal Financial Manager app provides a comprehensive set of features to help users track expenses, set budgets, monitor savings, and analyze spending patterns. Whether you're aiming to save for a vacation, pay off debt, or simply gain a better understanding of your financial habits, this app is designed to support you on your journey to financial wellness.
 
 - **Deployed Site:** [Personal Financial Manager](https://www.example.com)
-- **Final Project Blog Article:** [Managing Finances with Personal Financial Manager](https://www.example.com/blog)
+- **Final Project Blog Article:** [Managing Finances with Personal Financial Manager]([https://www.example.com/blog](https://medium.com/@Joshua1821/exploring-personal-finance-management-a-journey-in-financial-empowerment-0e08f6cbc4b6))
 - **Authors:** Motekema Mahlanya ([LinkedIn](https://www.linkedin.com/in/motekema-mahlanya-58ab22230/)), Joshua Chikasha ([LinkedIn](https://www.linkedin.com/in/joshua-chikasha))
 
 ![feature1](https://github.com/Lebohang1821/personal-financial-manager/assets/133529043/b3b97eca-831b-4f9a-bd31-852ce06f6456)
