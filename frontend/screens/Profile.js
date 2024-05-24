@@ -11,6 +11,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
+import { Buffer } from "buffer";
 
 // Custom horizontal rule component
 const Hr = () => <View style={styles.hr} />;
@@ -30,7 +31,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080");
+        const response = await axios.get("http://192.168.1.100:8080"); // Replace with your local IP address
         const {
           Username,
           Email,
@@ -40,15 +41,28 @@ export default function Profile() {
           Bank_type,
           Profile_pic,
         } = response.data;
+
+        // Convert buffer to Base64 string
+        const base64String = Buffer.from(Profile_pic.data).toString("base64");
+        const profilePicUri = `data:image/jpeg;base64,${base64String}`;
+
         setUsername(Username);
         setEmail(Email);
         setBio(Bio);
         setPhoneNumber(Phone_number);
         setBankName(Bank_name);
         setBankType(Bank_type);
-        setProfilePic(Profile_pic);
+        setProfilePic(profilePicUri);
       } catch (error) {
         console.error("Error fetching profile data:", error);
+        if (error.response) {
+          console.error("Server responded with status:", error.response.status);
+          console.error("Response data:", error.response.data);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error setting up request:", error.message);
+        }
       }
     };
 
