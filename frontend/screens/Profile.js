@@ -31,11 +31,8 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-<<<<<<< HEAD
         const response = await axios.get("http://localhost:8080");
-=======
-        const response = await axios.get("http://localhost:8080/"); // Replace with your local IP address
->>>>>>> 73a1ba391e98cc9c32eda52bf0d809eb3e7a6a25
+
         const {
           Username,
           Email,
