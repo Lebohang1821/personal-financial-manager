@@ -28,6 +28,20 @@ export default function Profile() {
   );
   const [isEditing, setIsEditing] = useState(false);
 
+  const handleImageUpload = async () => {
+    // Implement image selection and upload logic here
+    // Send the selected image to the backend
+    try {
+      const response = await fetch('http://192.168.1.2:8080/upload-profile-pic', {
+        method: 'POST',
+        body: formData, // Form data containing the selected image
+      });
+      // Handle response
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+    }
+  };
+  
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -77,28 +91,70 @@ export default function Profile() {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    // Perform save operation (e.g., update user profile on server)
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      await axios.post("http://192.168.1.2:8080/update-profile", {
+        username,
+        email,
+        bio,
+        phoneNumber,
+        bankName,
+        bankType
+      });
+      setIsEditing(false);
+      alert("Profile saved successfully");
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      alert("Failed to save profile. Please try again later.");
+    }
   };
+  
 
   const handleChooseImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
-
+  
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
-
+  
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
-
+  
     if (pickerResult.cancelled === true) {
       return;
     }
-
-    setProfilePic(pickerResult.uri);
-  };
+  
+    // Create FormData object to send the image file to the server
+    const formData = new FormData();
+    formData.append('profilePic', {
+      uri: pickerResult.uri,
+      type: 'image/jpeg', // Adjust the MIME type based on your image type
+      name: 'profilePic.jpg' // You can set any filename here
+    });
+  
+    // Send the image to the server
+    try {
+      const response = await fetch('http://192.168.1.2:8080/upload-profile-pic', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+  
+      // Assuming the server returns the URL of the uploaded image
+      const imageUrl = await response.text(); // Use response.json() if the server returns JSON
+      setProfilePic(imageUrl);
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+      // Handle error
+    }
+  };  
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
