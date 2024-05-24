@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,14 +10,15 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
 
 // Custom horizontal rule component
 const Hr = () => <View style={styles.hr} />;
 
 export default function Profile() {
-  const [username, setUsername] = useState("JohnDoe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [bio, setBio] = useState("Hello, I am John Doe.");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [bankName, setBankName] = useState("Select Bank");
   const [bankType, setBankType] = useState("Select Type");
@@ -25,6 +26,34 @@ export default function Profile() {
     "https://via.placeholder.com/150"
   );
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/profile");
+        const {
+          username,
+          email,
+          bio,
+          phoneNumber,
+          bankName,
+          bankType,
+          profilePic,
+        } = response.data;
+        setUsername(username);
+        setEmail(email);
+        setBio(bio);
+        setPhoneNumber(phoneNumber);
+        setBankName(bankName);
+        setBankType(bankType);
+        setProfilePic(profilePic);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   const handleEdit = () => {
     setIsEditing(true);
