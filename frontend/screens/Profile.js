@@ -26,12 +26,18 @@ export default function Profile() {
     Bank_type: "Select Type",
     Profile_pic: "https://via.placeholder.com/150",
   });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [bankName, setBankName] = useState("Select Bank");
+  const [bankType, setBankType] = useState("Select Type");
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080");
+        const response = await axios.get("http://localhost:8080/profile");
         const data = response.data[0];
 
         // Convert buffer to Base64 string
@@ -49,6 +55,12 @@ export default function Profile() {
           Bank_type: data.Bank_type,
           Profile_pic: profilePicUri,
         });
+        setUsername(data.Username);
+        setEmail(data.Email);
+        setBio(data.Bio);
+        setPhoneNumber(data.Phone_number);
+        setBankName(data.Bank_name);
+        setBankType(data.Bank_type);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -61,9 +73,21 @@ export default function Profile() {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    // Perform save operation (e.g., update user profile on server)
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/updateProfile", {
+        Username: username,
+        Email: email,
+        Bio: bio,
+        Phone_number: phoneNumber,
+        Bank_name: bankName,
+        Bank_type: bankType,
+      });
+      console.log("Profile updated successfully");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   const handleChooseImage = async () => {
@@ -91,7 +115,10 @@ export default function Profile() {
           onPress={handleChooseImage}
           style={styles.imageContainer}
         >
-          <Image source={{ uri: profilePic }} style={styles.image} />
+          <Image
+            source={{ uri: profileData.Profile_pic }}
+            style={styles.image}
+          />
         </TouchableOpacity>
 
         <Text style={styles.heading}>Profile</Text>
