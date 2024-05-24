@@ -17,52 +17,56 @@ import { Buffer } from "buffer";
 const Hr = () => <View style={styles.hr} />;
 
 export default function Profile() {
-  const [profileData, setProfileData] = useState({
-    Username: "",
-    Email: "",
-    Bio: "",
-    Phone_number: "",
-    Bank_name: "Select Bank",
-    Bank_type: "Select Type",
-    Profile_pic: "https://via.placeholder.com/150",
-  });
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [bankName, setBankName] = useState("Select Bank");
   const [bankType, setBankType] = useState("Select Type");
+  const [profilePic, setProfilePic] = useState(
+    "https://via.placeholder.com/150"
+  );
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/profile");
-        const data = response.data[0];
+        const response = await axios.get("http://192.168.1.2:8080"); // Replace with your local IP address
+        const data = response.data;
 
-        // Convert buffer to Base64 string
-        const base64String = Buffer.from(data.Profile_pic.data).toString(
-          "base64"
-        );
-        const profilePicUri = `data:image/jpeg;base64,${base64String}`;
+        if (data.length > 0) {
+          const {
+            Username,
+            Email,
+            Bio,
+            Phone_number,
+            Bank_name,
+            Bank_type,
+            Profile_pic,
+          } = data[0];
 
-        setProfileData({
-          Username: data.Username,
-          Email: data.Email,
-          Bio: data.Bio,
-          Phone_number: data.Phone_number,
-          Bank_name: data.Bank_name,
-          Bank_type: data.Bank_type,
-          Profile_pic: profilePicUri,
-        });
-        setUsername(data.Username);
-        setEmail(data.Email);
-        setBio(data.Bio);
-        setPhoneNumber(data.Phone_number);
-        setBankName(data.Bank_name);
-        setBankType(data.Bank_type);
+          // Convert buffer to Base64 string if necessary
+          const base64String = Buffer.from(Profile_pic.data).toString("base64");
+          const profilePicUri = `data:image/jpeg;base64,${base64String}`;
+
+          setUsername(Username);
+          setEmail(Email);
+          setBio(Bio);
+          setPhoneNumber(Phone_number);
+          setBankName(Bank_name);
+          setBankType(Bank_type);
+          setProfilePic(profilePicUri);
+        }
       } catch (error) {
         console.error("Error fetching profile data:", error);
+        if (error.response) {
+          console.error("Server responded with status:", error.response.status);
+          console.error("Response data:", error.response.data);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error setting up request:", error.message);
+        }
       }
     };
 
@@ -73,21 +77,9 @@ export default function Profile() {
     setIsEditing(true);
   };
 
-  const handleSave = async () => {
-    try {
-      const response = await axios.post("http://localhost:8080/updateProfile", {
-        Username: username,
-        Email: email,
-        Bio: bio,
-        Phone_number: phoneNumber,
-        Bank_name: bankName,
-        Bank_type: bankType,
-      });
-      console.log("Profile updated successfully");
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
+  const handleSave = () => {
+    // Perform save operation (e.g., update user profile on server)
+    setIsEditing(false);
   };
 
   const handleChooseImage = async () => {
@@ -105,7 +97,7 @@ export default function Profile() {
       return;
     }
 
-    setProfileData({ ...profileData, Profile_pic: pickerResult.uri });
+    setProfilePic(pickerResult.uri);
   };
 
   return (
@@ -115,10 +107,7 @@ export default function Profile() {
           onPress={handleChooseImage}
           style={styles.imageContainer}
         >
-          <Image
-            source={{ uri: profileData.Profile_pic }}
-            style={styles.image}
-          />
+          <Image source={{ uri: profilePic }} style={styles.image} />
         </TouchableOpacity>
 
         <Text style={styles.heading}>Profile</Text>
@@ -269,74 +258,74 @@ const styles = StyleSheet.create({
     // For iOS shadow
     shadowColor: "#000000",
     shadowOffset: {
-      width: 0,
-      height: 10,
+    width: 0,
+    height: 10,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-  },
-  imageContainer: {
+    },
+    imageContainer: {
     marginBottom: 20,
-  },
-  image: {
+    },
+    image: {
     width: 150,
     height: 150,
     borderRadius: 75,
-  },
-  heading: {
+    },
+    heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 15,
-  },
-  field: {
+    },
+    field: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 5,
     width: "100%",
-  },
-  label: {
+    },
+    label: {
     width: 120,
     marginRight: 5,
     fontWeight: "bold",
-  },
-  text: {
+    },
+    text: {
     flex: 1,
     fontSize: 16,
-  },
-  input: {
+    },
+    input: {
     flex: 1,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
-  },
-  bioInput: {
+    },
+    bioInput: {
     height: 100,
-  },
-  saveButton: {
+    },
+    saveButton: {
     backgroundColor: "#4CAF50",
     paddingVertical: 10,
     paddingHorizontal: 90,
     borderRadius: 5,
     marginTop: 10,
-  },
-  editButton: {
+    },
+    editButton: {
     backgroundColor: "#2196F3",
     paddingVertical: 10,
     paddingHorizontal: 90,
     borderRadius: 5,
     marginTop: 10,
-  },
-  buttonText: {
+    },
+    buttonText: {
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
-  },
-  hr: {
+    },
+    hr: {
     width: "100%",
     height: 1,
     backgroundColor: "#ccc",
     marginVertical: 10,
-  },
-});
+    },
+    });
