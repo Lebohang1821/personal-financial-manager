@@ -30,23 +30,23 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/profile");
+        const response = await axios.get("http://localhost:8080");
         const {
-          username,
-          email,
-          bio,
-          phoneNumber,
-          bankName,
-          bankType,
-          profilePic,
+          Username,
+          Email,
+          Bio,
+          Phone_number,
+          Bank_name,
+          Bank_type,
+          Profile_pic,
         } = response.data;
-        setUsername(username);
-        setEmail(email);
-        setBio(bio);
-        setPhoneNumber(phoneNumber);
-        setBankName(bankName);
-        setBankType(bankType);
-        setProfilePic(profilePic);
+        setUsername(Username);
+        setEmail(Email);
+        setBio(Bio);
+        setPhoneNumber(Phone_number);
+        setBankName(Bank_name);
+        setBankType(Bank_type);
+        setProfilePic(Profile_pic);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
