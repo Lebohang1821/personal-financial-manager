@@ -4,32 +4,26 @@ const pool = require('./db_connection'); // Ensure this file exports the connect
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Middleware to check database connection
-app.use((req, res, next) => {
+// Route to fetch and display data from the database
+app.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
       console.error("Error getting connection from the pool:", err);
       return res.status(500).send('Database connection failed');
     }
 
-    const sql = "SELECT 1 FROM `customer_profile` LIMIT 1"; // A simple query to check table connection
-    connection.query(sql, (error) => {
+    const sql = "SELECT * FROM customer_profile"; // Change this to your actual table name
+    connection.query(sql, (error, results) => {
       connection.release(); // Always release the connection back to the pool
 
       if (error) {
         console.error("Error executing query:", error);
-        return res.status(500).send('Table connection failed');
+        return res.status(500).send('Error fetching data from database');
       }
 
-      console.log("Table connection successful");
-      next(); // Proceed to the next middleware or route handler
+      res.json(results); // Send the JSON response containing the data
     });
   });
-});
-
-// Basic route
-app.get('/', (req, res) => {
-  res.send('Server is running and database connection is successful');
 });
 
 // Start the server
