@@ -17,52 +17,40 @@ import { Buffer } from "buffer";
 const Hr = () => <View style={styles.hr} />;
 
 export default function Profile() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [bio, setBio] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [bankName, setBankName] = useState("Select Bank");
-  const [bankType, setBankType] = useState("Select Type");
-  const [profilePic, setProfilePic] = useState(
-    "https://via.placeholder.com/150"
-  );
+  const [profileData, setProfileData] = useState({
+    Username: "",
+    Email: "",
+    Bio: "",
+    Phone_number: "",
+    Bank_name: "Select Bank",
+    Bank_type: "Select Type",
+    Profile_pic: "https://via.placeholder.com/150",
+  });
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get("http://localhost:8080");
-        const {
-          Username,
-          Email,
-          Bio,
-          Phone_number,
-          Bank_name,
-          Bank_type,
-          Profile_pic,
-        } = response.data;
+        const data = response.data[0];
 
         // Convert buffer to Base64 string
-        const base64String = Buffer.from(Profile_pic.data).toString("base64");
+        const base64String = Buffer.from(data.Profile_pic.data).toString(
+          "base64"
+        );
         const profilePicUri = `data:image/jpeg;base64,${base64String}`;
 
-        setUsername(Username);
-        setEmail(Email);
-        setBio(Bio);
-        setPhoneNumber(Phone_number);
-        setBankName(Bank_name);
-        setBankType(Bank_type);
-        setProfilePic(profilePicUri);
+        setProfileData({
+          Username: data.Username,
+          Email: data.Email,
+          Bio: data.Bio,
+          Phone_number: data.Phone_number,
+          Bank_name: data.Bank_name,
+          Bank_type: data.Bank_type,
+          Profile_pic: profilePicUri,
+        });
       } catch (error) {
         console.error("Error fetching profile data:", error);
-        if (error.response) {
-          console.error("Server responded with status:", error.response.status);
-          console.error("Response data:", error.response.data);
-        } else if (error.request) {
-          console.error("No response received:", error.request);
-        } else {
-          console.error("Error setting up request:", error.message);
-        }
       }
     };
 
@@ -93,7 +81,7 @@ export default function Profile() {
       return;
     }
 
-    setProfilePic(pickerResult.uri);
+    setProfileData({ ...profileData, Profile_pic: pickerResult.uri });
   };
 
   return (
