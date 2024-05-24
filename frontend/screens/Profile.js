@@ -32,7 +32,6 @@ export default function Profile() {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get("http://localhost:8080");
-
         const {
           Username,
           Email,
