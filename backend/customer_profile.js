@@ -8,7 +8,7 @@ function fetchCustomers() {
       return;
     }
 
-    const sql = "SELECT * FROM customers"; // Change this to your actual table name
+    const sql = "SELECT * FROM `customer_profile`"; // Change this to your actual table name
     connection.query(sql, (error, results) => {
       connection.release(); // Always release the connection back to the pool
 
