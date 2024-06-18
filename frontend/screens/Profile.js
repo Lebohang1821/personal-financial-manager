@@ -32,7 +32,7 @@ export default function Profile() {
     // Implement image selection and upload logic here
     // Send the selected image to the backend
     try {
-      const response = await fetch('http://192.168.1.2:8080/upload-profile-pic', {
+      const response = await fetch('http://localhost:8080/upload-profile-pic', {
         method: 'POST',
         body: formData, // Form data containing the selected image
       });
@@ -45,7 +45,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.2:8080"); // Replace with your local IP address
+        const response = await axios.get("http://localhost:8080"); // Replace with your local IP address
         const data = response.data;
 
         if (data.length > 0) {
@@ -93,7 +93,7 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      await axios.post("http://192.168.1.2:8080/update-profile", {
+      await axios.post("http://localhost:8080/update-profile", {
         username,
         email,
         bio,
@@ -135,7 +135,7 @@ export default function Profile() {
   
     // Send the image to the server
     try {
-      const response = await fetch('http://192.168.1.2:8080/upload-profile-pic', {
+      const response = await fetch('http://localhost:8080/upload-profile-pic', {
         method: 'POST',
         body: formData,
         headers: {
