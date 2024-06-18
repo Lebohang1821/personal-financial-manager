@@ -7,6 +7,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
@@ -27,25 +29,12 @@ export default function Profile() {
     "https://via.placeholder.com/150"
   );
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // State to manage loading indicator
 
-  const handleImageUpload = async () => {
-    // Implement image selection and upload logic here
-    // Send the selected image to the backend
-    try {
-      const response = await fetch('http://localhost:8080/upload-profile-pic', {
-        method: 'POST',
-        body: formData, // Form data containing the selected image
-      });
-      // Handle response
-    } catch (error) {
-      console.error('Error uploading profile picture:', error);
-    }
-  };
-  
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080"); // Replace with your local IP address
+        const response = await axios.get("http://127.0.0.1:8080/");
         const data = response.data;
 
         if (data.length > 0) {
@@ -59,7 +48,6 @@ export default function Profile() {
             Profile_pic,
           } = data[0];
 
-          // Convert buffer to Base64 string if necessary
           const base64String = Buffer.from(Profile_pic.data).toString("base64");
           const profilePicUri = `data:image/jpeg;base64,${base64String}`;
 
@@ -73,14 +61,7 @@ export default function Profile() {
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
-        if (error.response) {
-          console.error("Server responded with status:", error.response.status);
-          console.error("Response data:", error.response.data);
-        } else if (error.request) {
-          console.error("No response received:", error.request);
-        } else {
-          console.error("Error setting up request:", error.message);
-        }
+        alert("Failed to fetch profile data. Please try again later.");
       }
     };
 
@@ -93,68 +74,71 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      await axios.post("http://localhost:8080/update-profile", {
+      setIsLoading(true); // Start loading indicator
+      await axios.post("http://127.0.0.1:8080//update-profile", {
         username,
         email,
         bio,
         phoneNumber,
         bankName,
-        bankType
+        bankType,
       });
       setIsEditing(false);
+      setIsLoading(false); // Stop loading indicator
       alert("Profile saved successfully");
     } catch (error) {
       console.error("Error saving profile:", error);
+      setIsLoading(false); // Stop loading indicator
       alert("Failed to save profile. Please try again later.");
     }
   };
-  
 
   const handleChooseImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
-  
+
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
-  
+
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
-  
+
     if (pickerResult.cancelled === true) {
       return;
     }
-  
-    // Create FormData object to send the image file to the server
+
+    setIsLoading(true); // Start loading indicator
+
     const formData = new FormData();
-    formData.append('profilePic', {
+    formData.append("profilePic", {
       uri: pickerResult.uri,
-      type: 'image/jpeg', // Adjust the MIME type based on your image type
-      name: 'profilePic.jpg' // You can set any filename here
+      type: "image/jpeg",
+      name: "profilePic.jpg",
     });
-  
-    // Send the image to the server
+
     try {
-      const response = await fetch('http://localhost:8080/upload-profile-pic', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:8080//upload-profile-pic", {
+        method: "POST",
         body: formData,
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-  
+
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        throw new Error("Failed to upload image");
       }
-  
-      // Assuming the server returns the URL of the uploaded image
-      const imageUrl = await response.text(); // Use response.json() if the server returns JSON
+
+      const imageUrl = await response.text();
       setProfilePic(imageUrl);
     } catch (error) {
-      console.error('Error uploading profile picture:', error);
-      // Handle error
+      console.error("Error uploading profile picture:", error);
+      alert("Failed to upload profile picture. Please try again.");
     }
-  };  
+
+    setIsLoading(false); // Stop loading indicator
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -260,12 +244,28 @@ export default function Profile() {
         {/* Render horizontal rule component */}
         <Hr />
         {isEditing ? (
-          <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-            <Text style={styles.buttonText}>Save</Text>
+          <TouchableOpacity
+            onPress={handleSave}
+            style={styles.saveButton}
+            disabled={isLoading} // Disable button when loading
+          >
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Save</Text>
+            )}
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={handleEdit} style={styles.editButton}>
-            <Text style={styles.buttonText}>Edit</Text>
+          <TouchableOpacity
+            onPress={handleEdit}
+            style={styles.editButton}
+            disabled={isLoading} // Disable button when loading
+          >
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Edit</Text>
+            )}
           </TouchableOpacity>
         )}
       </View>
@@ -314,74 +314,74 @@ const styles = StyleSheet.create({
     // For iOS shadow
     shadowColor: "#000000",
     shadowOffset: {
-    width: 0,
-    height: 10,
+      width: 0,
+      height: 10,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    },
-    imageContainer: {
+  },
+  imageContainer: {
     marginBottom: 20,
-    },
-    image: {
+  },
+  image: {
     width: 150,
     height: 150,
     borderRadius: 75,
-    },
-    heading: {
+  },
+  heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 15,
-    },
-    field: {
+  },
+  field: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 5,
     width: "100%",
-    },
-    label: {
+  },
+  label: {
     width: 120,
     marginRight: 5,
     fontWeight: "bold",
-    },
-    text: {
+  },
+  text: {
     flex: 1,
     fontSize: 16,
-    },
-    input: {
+  },
+  input: {
     flex: 1,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
-    },
-    bioInput: {
+  },
+  bioInput: {
     height: 100,
-    },
-    saveButton: {
+  },
+  saveButton: {
     backgroundColor: "#4CAF50",
     paddingVertical: 10,
     paddingHorizontal: 90,
     borderRadius: 5,
     marginTop: 10,
-    },
-    editButton: {
+  },
+  editButton: {
     backgroundColor: "#2196F3",
     paddingVertical: 10,
     paddingHorizontal: 90,
     borderRadius: 5,
     marginTop: 10,
-    },
-    buttonText: {
+  },
+  buttonText: {
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
-    },
-    hr: {
+  },
+  hr: {
     width: "100%",
     height: 1,
     backgroundColor: "#ccc",
     marginVertical: 10,
-    },
-    });
+  },
+});
