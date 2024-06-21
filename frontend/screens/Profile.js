@@ -11,7 +11,6 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
-import { Buffer } from "buffer";
 
 // Custom horizontal rule component
 const Hr = () => <View style={styles.hr} />;
@@ -31,7 +30,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.5:8080/"); // Replace with your local IP address
+        const response = await axios.get("http://192.168.1.5:8080"); // Replace with your backend URL
         const data = response.data;
 
         if (data.length > 0) {
@@ -45,33 +44,16 @@ export default function Profile() {
             Profile_pic,
           } = data[0];
 
-          // Convert buffer to Base64 string if necessary
-          let profilePicUri = "https://via.placeholder.com/150"; // Default profile pic
-          if (Profile_pic && Profile_pic.data) {
-            const base64String = Buffer.from(Profile_pic.data).toString(
-              "base64"
-            );
-            profilePicUri = `data:image/jpeg;base64,${base64String}`;
-          }
-
           setUsername(Username);
           setEmail(Email);
           setBio(Bio);
           setPhoneNumber(Phone_number);
           setBankName(Bank_name);
           setBankType(Bank_type);
-          setProfilePic(profilePicUri);
+          setProfilePic(Profile_pic); // Assuming Profile_pic is a URL
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
-        if (error.response) {
-          console.error("Server responded with status:", error.response.status);
-          console.error("Response data:", error.response.data);
-        } else if (error.request) {
-          console.error("No response received:", error.request);
-        } else {
-          console.error("Error setting up request:", error.message);
-        }
       }
     };
 
@@ -84,19 +66,20 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      await axios.post("http://192.168.1.5:8080/update-profile", {
+      const response = await axios.post("http://192.168.1.5:8080/update-profile", {
         username,
         email,
         bio,
         phoneNumber,
         bankName,
         bankType,
-        profilePic, // Consider uploading the image separately and sending its URL/path
       });
       setIsEditing(false);
+      alert("Profile saved successfully");
+      console.log("Profile saved:", response.data); // Log response for debugging
     } catch (error) {
-      console.error("Error saving profile data:", error);
-      // Add additional error handling and feedback for the user
+      console.error("Error saving profile:", error);
+      alert("Failed to save profile. Please try again later.");
     }
   };
 
@@ -109,18 +92,39 @@ export default function Profile() {
       return;
     }
 
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+    const pickerResult = await ImagePicker.launchImageLibraryAsync();
 
     if (pickerResult.cancelled === true) {
       return;
     }
 
-    setProfilePic(pickerResult.uri);
+    const formData = new FormData();
+    formData.append("profilePic", {
+      uri: pickerResult.uri,
+      type: "image/jpeg",
+      name: "profilePic.jpg",
+    });
+
+    try {
+      const response = await fetch("http://192.168.1.5:8080/upload-profile-pic", {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+
+      const imageUrl = await response.text();
+      setProfilePic(imageUrl);
+      console.log("Image uploaded successfully:", imageUrl); // Log URL for debugging
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      alert("Failed to upload profile picture. Please try again later.");
+    }
   };
 
   return (
@@ -134,7 +138,7 @@ export default function Profile() {
         </TouchableOpacity>
 
         <Text style={styles.heading}>Profile</Text>
-        <View style={styles.profileContainer}>
+        <View style={styles.Profilecontainer}>
           <View style={styles.field}>
             <Text style={styles.label}>Username:</Text>
             {isEditing ? (
@@ -154,8 +158,6 @@ export default function Profile() {
                 style={styles.input}
                 value={email}
                 onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
               />
             ) : (
               <Text style={styles.text}>{email}</Text>
@@ -200,7 +202,7 @@ export default function Profile() {
                 <Picker.Item label="Standard Bank" value="Standard Bank" />
                 <Picker.Item label="FNB" value="FNB" />
                 <Picker.Item label="Time Bank" value="Time Bank" />
-                <Picker.Item label="ABSA" value="ABSA" />
+                <Picker.Item label="ABSA" value="ABSA Bank" />
                 {/* Add more bank options as needed */}
               </Picker>
             ) : (
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     backgroundColor: "#f9f9f9",
   },
-  profileContainer: {
+  Profilecontainer: {
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#b8b8b8",
