@@ -28,24 +28,10 @@ export default function Profile() {
   );
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleImageUpload = async () => {
-    // Implement image selection and upload logic here
-    // Send the selected image to the backend
-    try {
-      const response = await fetch('http://127.0.0.1:8080/upload-profile-pic', {
-        method: 'POST',
-        body: formData, // Form data containing the selected image
-      });
-      // Handle response
-    } catch (error) {
-      console.error('Error uploading profile picture:', error);
-    }
-  };
-  
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8080"); // Replace with your local IP address
+        const response = await axios.get("http://192.168.1.5:8080/"); // Replace with your local IP address
         const data = response.data;
 
         if (data.length > 0) {
@@ -60,8 +46,13 @@ export default function Profile() {
           } = data[0];
 
           // Convert buffer to Base64 string if necessary
-          const base64String = Buffer.from(Profile_pic.data).toString("base64");
-          const profilePicUri = `data:image/jpeg;base64,${base64String}`;
+          let profilePicUri = "https://via.placeholder.com/150"; // Default profile pic
+          if (Profile_pic && Profile_pic.data) {
+            const base64String = Buffer.from(Profile_pic.data).toString(
+              "base64"
+            );
+            profilePicUri = `data:image/jpeg;base64,${base64String}`;
+          }
 
           setUsername(Username);
           setEmail(Email);
@@ -93,68 +84,44 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      await axios.post("http://127.0.0.1:8080/update-profile", {
+      await axios.post("http://192.168.1.5:8080/update-profile", {
         username,
         email,
         bio,
         phoneNumber,
         bankName,
-        bankType
+        bankType,
+        profilePic, // Consider uploading the image separately and sending its URL/path
       });
       setIsEditing(false);
-      alert("Profile saved successfully");
     } catch (error) {
-      console.error("Error saving profile:", error);
-      alert("Failed to save profile. Please try again later.");
+      console.error("Error saving profile data:", error);
+      // Add additional error handling and feedback for the user
     }
   };
-  
 
   const handleChooseImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
-  
+
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
-  
-    const pickerResult = await ImagePicker.launchImageLibraryAsync();
-  
+
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
     if (pickerResult.cancelled === true) {
       return;
     }
-  
-    // Create FormData object to send the image file to the server
-    const formData = new FormData();
-    formData.append('profilePic', {
-      uri: pickerResult.uri,
-      type: 'image/jpeg', // Adjust the MIME type based on your image type
-      name: 'profilePic.jpg' // You can set any filename here
-    });
-  
-    // Send the image to the server
-    try {
-      const response = await fetch('http://127.0.0.1:8080/upload-profile-pic', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to upload image');
-      }
-  
-      // Assuming the server returns the URL of the uploaded image
-      const imageUrl = await response.text(); // Use response.json() if the server returns JSON
-      setProfilePic(imageUrl);
-    } catch (error) {
-      console.error('Error uploading profile picture:', error);
-      // Handle error
-    }
-  };  
+
+    setProfilePic(pickerResult.uri);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -167,7 +134,7 @@ export default function Profile() {
         </TouchableOpacity>
 
         <Text style={styles.heading}>Profile</Text>
-        <View style={styles.Profilecontainer}>
+        <View style={styles.profileContainer}>
           <View style={styles.field}>
             <Text style={styles.label}>Username:</Text>
             {isEditing ? (
@@ -187,6 +154,8 @@ export default function Profile() {
                 style={styles.input}
                 value={email}
                 onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
               />
             ) : (
               <Text style={styles.text}>{email}</Text>
@@ -231,7 +200,7 @@ export default function Profile() {
                 <Picker.Item label="Standard Bank" value="Standard Bank" />
                 <Picker.Item label="FNB" value="FNB" />
                 <Picker.Item label="Time Bank" value="Time Bank" />
-                <Picker.Item label="ABSA" value="ABSA Bank" />
+                <Picker.Item label="ABSA" value="ABSA" />
                 {/* Add more bank options as needed */}
               </Picker>
             ) : (
@@ -282,7 +251,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     backgroundColor: "#f9f9f9",
   },
-  Profilecontainer: {
+  profileContainer: {
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "#b8b8b8",
@@ -314,74 +283,74 @@ const styles = StyleSheet.create({
     // For iOS shadow
     shadowColor: "#000000",
     shadowOffset: {
-    width: 0,
-    height: 10,
+      width: 0,
+      height: 10,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    },
-    imageContainer: {
+  },
+  imageContainer: {
     marginBottom: 20,
-    },
-    image: {
+  },
+  image: {
     width: 150,
     height: 150,
     borderRadius: 75,
-    },
-    heading: {
+  },
+  heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 15,
-    },
-    field: {
+  },
+  field: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 5,
     width: "100%",
-    },
-    label: {
+  },
+  label: {
     width: 120,
     marginRight: 5,
     fontWeight: "bold",
-    },
-    text: {
+  },
+  text: {
     flex: 1,
     fontSize: 16,
-    },
-    input: {
+  },
+  input: {
     flex: 1,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
-    },
-    bioInput: {
+  },
+  bioInput: {
     height: 100,
-    },
-    saveButton: {
+  },
+  saveButton: {
     backgroundColor: "#4CAF50",
     paddingVertical: 10,
     paddingHorizontal: 90,
     borderRadius: 5,
     marginTop: 10,
-    },
-    editButton: {
+  },
+  editButton: {
     backgroundColor: "#2196F3",
     paddingVertical: 10,
     paddingHorizontal: 90,
     borderRadius: 5,
     marginTop: 10,
-    },
-    buttonText: {
+  },
+  buttonText: {
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
-    },
-    hr: {
+  },
+  hr: {
     width: "100%",
     height: 1,
     backgroundColor: "#ccc",
     marginVertical: 10,
-    },
-    });
+  },
+});
