@@ -44,6 +44,7 @@ const Signup = (props) => {
             paddingBottom: 20,
             alignItems: "center",
             marginTop: 10,
+            borderBottomRightRadius: 75,
           }}
         >
           <Field

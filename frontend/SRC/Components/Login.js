@@ -33,6 +33,7 @@ const Login = (props) => {
               paddingTop: 100,
               alignItems: "center",
               marginTop: 70,
+              borderBottomRightRadius: 45,
             }}
           >
             <Text
