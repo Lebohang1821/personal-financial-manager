@@ -17,7 +17,8 @@ const Signup = (props) => {
             color: "white",
             fontSize: 64,
             fontWeight: "bold",
-            marginTop: 20,
+            marginTop: 60, // Adjusted marginTop to move "Register" lower
+            marginBottom: 10, // Added marginBottom for spacing
             textAlign: "center",
           }}
         >
@@ -87,8 +88,10 @@ const Signup = (props) => {
             Press={() => {
               props.navigation.navigate("Main");
             }}
-            containerStyle={{ marginBottom: 10, width: "78%" }}
+            containerStyle={{ marginBottom: 30, width: "78%" }} // Increased marginBottom to move the signup button lower
           />
+        </View>
+        <View style={{ alignItems: "center", marginBottom: 20 }}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Text style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}>
               Already have an account?{" "}
