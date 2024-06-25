@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   Profilecontainer: {
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
+    backgroundColor: "hsla(0, 0%, 80%, 1.0)",
     borderBottomWidth: 2,
     padding: 15,
     borderRadius: 10,
