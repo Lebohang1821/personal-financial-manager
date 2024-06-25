@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+
+const styles = StyleSheet.create({
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    alignSelf: "center",
+    marginBottom: -45, // Corrected to numeric value without quotes
+    marginTop: -65, // This will have no effect, so it's removed
+  },
+});
+
 
 const homeStyles = StyleSheet.create({
   container: {
@@ -81,10 +93,13 @@ export default function Home() {
   return (
     <ScrollView contentContainerStyle={homeStyles.container}>
       <View>
-        <Text style={homeStyles.heading}>
-          Welcome back to{"\n"}
-          <Text style={{ fontSize: 28 }}>Personal Finance Manager</Text>
-        </Text>
+      <Text style={homeStyles.heading}>
+        Welcome back to
+      </Text>
+      <Image
+        source={require('./assets/logo.png')}
+        style={styles.image}
+      />
         <Text style={homeStyles.description}>
           Explore our app's features and take control of your finances like
           never before.
