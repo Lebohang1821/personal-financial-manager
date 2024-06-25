@@ -11,9 +11,9 @@ const Field = (props) => {
         color: "blue",
         paddingHorizontal: 10,
         width: "78%",
-        height: 30,
+        height: 35,
         backgroundColor: "rgb(220,220, 220)",
-        marginVertical: 10,
+        marginVertical: 4,
       }}
       placeholderTextColor="dimgrey"
     ></TextInput>
