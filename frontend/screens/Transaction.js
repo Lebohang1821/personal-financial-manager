@@ -88,6 +88,7 @@ const transactionStyles = {
     flex: 1,
     padding: 15,
     backgroundColor: "#f0f0f0",
+    paddingBottom: 59,
   },
   monthHeading: {
     fontSize: 20,

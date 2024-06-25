@@ -18,6 +18,7 @@ const homeStyles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 15,
     backgroundColor: "#f0f0f0",
+    paddingBottom: 59,
   },
   heading: {
     fontSize: 24,

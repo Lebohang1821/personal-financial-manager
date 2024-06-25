@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
     backgroundColor: "#f9f9f9",
+    paddingBottom: 79,
   },
   Profilecontainer: {
     alignItems: "center",

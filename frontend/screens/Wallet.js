@@ -33,6 +33,7 @@ const homeStyles = StyleSheet.create({
     flex: 1,
     padding: 15,
     backgroundColor: "#f0f0f0",
+    paddingBottom: 59,
   },
   accountItem: {
     padding: 15,
