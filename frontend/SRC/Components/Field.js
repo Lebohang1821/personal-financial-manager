@@ -1,6 +1,6 @@
 import React from "react";
 import { TextInput } from "react-native";
-import { darkGreen } from "./Constants";
+import { dimgrey } from "./Constants";
 
 const Field = (props) => {
   return (
@@ -15,7 +15,7 @@ const Field = (props) => {
         backgroundColor: "rgb(220,220, 220)",
         marginVertical: 4,
       }}
-      placeholderTextColor="dimgrey"
+      placeholderTextColor={dimgrey}
     ></TextInput>
   );
 };
