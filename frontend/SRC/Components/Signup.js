@@ -37,16 +37,23 @@ const Signup = (props) => {
         </Text>
         <View
           style={{
-            backgroundColor: "transparent",
+            backgroundColor: "hsla(0, 0%, 80%, 0.3)",
             width: containerWidth,
             borderTopLeftRadius: 130,
             paddingTop: 50,
             paddingBottom: 20,
             alignItems: "center",
+            marginTop: 30,
           }}
         >
-          <Field placeholder="First Name" containerStyle={{ marginBottom: 10, width: "78%" }} />
-          <Field placeholder="Last Name" containerStyle={{ marginBottom: 10, width: "78%" }} />
+          <Field
+            placeholder="First Name"
+            containerStyle={{ marginBottom: 10, width: "78%" }}
+          />
+          <Field
+            placeholder="Last Name"
+            containerStyle={{ marginBottom: 10, width: "78%" }}
+          />
           <Field
             placeholder="Email / Username"
             keyboardType={"email-address"}
@@ -67,7 +74,14 @@ const Signup = (props) => {
             secureTextEntry={true}
             containerStyle={{ marginBottom: 10, width: "78%" }}
           />
-          <View style={{ flexDirection: "row", alignItems: "center", width: "78%", marginBottom: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "78%",
+              marginBottom: 10,
+            }}
+          >
             <Text style={{ color: "grey" }}>
               By signing in, you agree to our{" "}
             </Text>
@@ -75,7 +89,14 @@ const Signup = (props) => {
               Terms & Conditions
             </Text>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center", width: "78%", marginBottom: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "78%",
+              marginBottom: 10,
+            }}
+          >
             <Text style={{ color: "grey" }}>and </Text>
             <Text style={{ color: darkGreen, fontWeight: "bold" }}>
               Privacy Policy
@@ -93,13 +114,17 @@ const Signup = (props) => {
         </View>
         <View style={{ alignItems: "center", marginBottom: 20 }}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Text style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}
+            >
               Already have an account?{" "}
             </Text>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Login")}
             >
-              <Text style={{ color: darkGreen, fontSize: 16, fontWeight: "bold" }}>
+              <Text
+                style={{ color: darkGreen, fontSize: 16, fontWeight: "bold" }}
+              >
                 Login
               </Text>
             </TouchableOpacity>

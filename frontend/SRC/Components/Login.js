@@ -27,14 +27,22 @@ const Login = (props) => {
           </Text>
           <View
             style={{
-              backgroundColor: "transparent",
+              backgroundColor: "hsla(0, 0%, 80%, 0.3)",
               width: containerWidth,
               borderTopLeftRadius: 130,
               paddingTop: 100,
               alignItems: "center",
+              marginTop: 70,
             }}
           >
-            <Text style={{ fontSize: 40, color: "darkgoldenrod", fontWeight: "bold", textAlign: "center" }}>
+            <Text
+              style={{
+                fontSize: 40,
+                color: "darkgoldenrod",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
               Welcome Back
             </Text>
             <Text
@@ -59,12 +67,18 @@ const Login = (props) => {
               containerStyle={{ width: "78%", marginBottom: 20 }}
             />
             <TouchableOpacity
-              style={{ alignSelf: "flex-end", marginRight: 16, marginBottom: 20 }}
+              style={{
+                alignSelf: "flex-end",
+                marginRight: 16,
+                marginBottom: 20,
+              }}
               onPress={() => {
                 // Implement your "Forgot Password" functionality here
               }}
             >
-              <Text style={{ color: "silver", fontWeight: "bold", fontSize: 16 }}>
+              <Text
+                style={{ color: "silver", fontWeight: "bold", fontSize: 16 }}
+              >
                 Forgot Password ?
               </Text>
             </TouchableOpacity>
@@ -79,14 +93,27 @@ const Login = (props) => {
             />
           </View>
           <View style={{ alignItems: "center", marginTop: 20 }}>
-            <Text style={{ color: darkGreen, fontSize: 16, fontWeight: "bold", textAlign: "center", marginBottom: 10 }}>
+            <Text
+              style={{
+                color: darkGreen,
+                fontSize: 16,
+                fontWeight: "bold",
+                textAlign: "center",
+                marginBottom: 10,
+              }}
+            >
               Don't have an account?
             </Text>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Signup")}
             >
               <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: 16, textAlign: "center" }}
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                  textAlign: "center",
+                }}
               >
                 Signup
               </Text>
