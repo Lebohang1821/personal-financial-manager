@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
+    backgroundColor: "hsla(0, 0%, 80%, 0.3)",
     borderBottomWidth: 2,
     padding: 15,
     borderRadius: 10,

@@ -41,7 +41,7 @@ const homeStyles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
     alignItems: "center",
-    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
+    backgroundColor: "hsla(0, 0%, 80%, 0.3)",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
