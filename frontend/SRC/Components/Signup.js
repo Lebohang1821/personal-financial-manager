@@ -31,7 +31,7 @@ const Signup = (props) => {
         </Text>
         <View
           style={{
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             height: 700,
             width: 460,
             borderTopLeftRadius: 130,
@@ -98,7 +98,7 @@ const Signup = (props) => {
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}>
               Already have an account ?{" "}
             </Text>
             <TouchableOpacity
