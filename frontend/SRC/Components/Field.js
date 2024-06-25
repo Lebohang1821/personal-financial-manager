@@ -8,13 +8,13 @@ const Field = (props) => {
       {...props}
       style={{
         borderRadius: 100,
-        color: darkGreen,
+        color: "blue",
         paddingHorizontal: 10,
         width: "78%",
         backgroundColor: "rgb(220,220, 220)",
         marginVertical: 10,
       }}
-      placeholderTextColor={darkGreen}
+      placeholderTextColor="dimgrey"
     ></TextInput>
   );
 };

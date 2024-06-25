@@ -21,7 +21,7 @@ const Login = (props) => {
         </Text>
         <View
           style={{
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             height: 700,
             width: 460,
             borderTopLeftRadius: 130,
@@ -29,7 +29,7 @@ const Login = (props) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 40, color: darkGreen, fontWeight: "bold" }}>
+          <Text style={{ fontSize: 40, color: "darkgoldenrod", fontWeight: "bold" }}>
             Welcome Back
           </Text>
           <Text
@@ -56,14 +56,14 @@ const Login = (props) => {
             }}
           >
             <Text
-              style={{ color: darkGreen, fontWeight: "bold", fontSize: 16 }}
+              style={{ color: "silver", fontWeight: "bold", fontSize: 16 }}
             >
               Forgot Password ?
             </Text>
           </View>
           <Btn
             textColor="white"
-            bgColor={darkGreen}
+            bgColor="blue"
             btnLabel="Login"
             Press={() => {
               props.navigation.navigate("Main");
@@ -76,14 +76,14 @@ const Login = (props) => {
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text style={{ color: darkGreen, fontSize: 16, fontWeight: "bold" }}>
               Don't have an account ?{" "}
             </Text>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("Signup")}
             >
               <Text
-                style={{ color: darkGreen, fontWeight: "bold", fontSize: 16 }}
+                style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
                 Signup
               </Text>
