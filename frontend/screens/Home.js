@@ -5,19 +5,18 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-    resizeMode: 'contain',
+    resizeMode: "contain",
     alignSelf: "center",
     marginBottom: -45, // Corrected to numeric value without quotes
     marginTop: -65, // This will have no effect, so it's removed
   },
 });
 
-
 const homeStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: 15,
     backgroundColor: "#f0f0f0",
   },
   heading: {
@@ -93,13 +92,8 @@ export default function Home() {
   return (
     <ScrollView contentContainerStyle={homeStyles.container}>
       <View>
-      <Text style={homeStyles.heading}>
-        Welcome back to
-      </Text>
-      <Image
-        source={require('./assets/logo.png')}
-        style={styles.image}
-      />
+        <Text style={homeStyles.heading}>Welcome back to</Text>
+        <Image source={require("./assets/logo.png")} style={styles.image} />
         <Text style={homeStyles.description}>
           Explore our app's features and take control of your finances like
           never before.

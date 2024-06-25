@@ -73,7 +73,7 @@ export default function Profile() {
       formData.append("phoneNumber", phoneNumber);
       formData.append("bankName", bankName);
       formData.append("bankType", bankType);
-  
+
       if (profilePic && profilePic !== "https://via.placeholder.com/150") {
         formData.append("profilePic", {
           uri: profilePic,
@@ -81,13 +81,17 @@ export default function Profile() {
           name: "profilePic.jpg",
         });
       }
-  
-      const response = await axios.post("http://192.168.56.1:8080/update-profile", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+
+      const response = await axios.post(
+        "http://192.168.56.1:8080/update-profile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       setIsEditing(false);
       alert("Profile saved successfully");
       console.log("Profile saved:", response.data); // Log response for debugging
@@ -96,7 +100,6 @@ export default function Profile() {
       alert("Failed to save profile. Please try again later.");
     }
   };
-  
 
   const handleChooseImage = async () => {
     const permissionResult =
@@ -121,13 +124,16 @@ export default function Profile() {
     });
 
     try {
-      const response = await fetch("http://192.168.56.1:8080/upload-profile-pic", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await fetch(
+        "http://192.168.56.1:8080/upload-profile-pic",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to upload image");
@@ -144,6 +150,7 @@ export default function Profile() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={transactionStyles.heading}>Your Profile</Text>
       <View style={styles.container}>
         <TouchableOpacity
           onPress={handleChooseImage}
@@ -371,3 +378,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 });
+const transactionStyles = {
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#006A42",
+  },
+};

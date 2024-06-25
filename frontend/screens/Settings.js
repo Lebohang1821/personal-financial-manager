@@ -100,7 +100,11 @@ const lightTheme = {
     backgroundColor: "#ffffff",
   },
   title: {
-    color: "#000000",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#006A42",
   },
   settingContainer: {
     backgroundColor: "#b8b8b8",
@@ -125,7 +129,11 @@ const darkTheme = {
     backgroundColor: "#1a1a1a",
   },
   title: {
-    color: "#ffffff",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#006A42",
   },
   settingContainer: {
     backgroundColor: "#303030",
@@ -152,7 +160,9 @@ const styles = {
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#006A42",
   },
   settingContainer: {
     marginBottom: 20,

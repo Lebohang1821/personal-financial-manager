@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, StyleSheet } from "react-native";
 
 const accountsData = [
   {
@@ -21,42 +21,60 @@ const accountsData = [
   // Add more accounts as needed
 ];
 
+const homeStyles = StyleSheet.create({
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    color: "#006A42",
+  },
+  container: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: "#f0f0f0",
+  },
+  accountItem: {
+    padding: 15,
+    borderBottomWidth: 2,
+    flexDirection: "row",
+    marginBottom: 10,
+    alignItems: "center",
+    backgroundColor: "#b8b8b8",
+    borderRadius: 10,
+  },
+  logo: {
+    width: 80,
+    height: 90,
+    marginRight: 10,
+  },
+  bankName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
+
 export default function Wallet() {
   const renderItem = ({ item }) => (
-    <View style={{ padding: 10 }}>
-      <View
-        style={{
-          padding: 15,
-          borderBottomWidth: 2,
-          flexDirection: "row",
-          marginBottom: -10,
-          alignItems: "center",
-          backgroundColor: "#b8b8b8",
-          borderRadius: 10,
-          marginTop: 10,
-        }}
-      >
-        <Image
-          source={item.logo}
-          style={{ width: 80, height: 90, marginRight: 10 }}
-        />
-        <View>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-            {item.bankName}
-          </Text>
-          <Text>Account Number: {item.accountNumber}</Text>
-          <Text>Card Number: {item.cardNumber}</Text>
-          <Text>Balance: R {item.balance.toFixed(2)}</Text>
-        </View>
+    <View style={homeStyles.accountItem}>
+      <Image source={item.logo} style={homeStyles.logo} />
+      <View>
+        <Text style={homeStyles.bankName}>{item.bankName}</Text>
+        <Text>Account Number: {item.accountNumber}</Text>
+        <Text>Card Number: {item.cardNumber}</Text>
+        <Text>Balance: R {item.balance.toFixed(2)}</Text>
       </View>
     </View>
   );
 
   return (
-    <FlatList
-      data={accountsData}
-      keyExtractor={(account) => account.id.toString()}
-      renderItem={renderItem}
-    />
+    <View style={homeStyles.container}>
+      <Text style={homeStyles.heading}>Your Banks Names</Text>
+      <FlatList
+        data={accountsData}
+        keyExtractor={(account) => account.id.toString()}
+        renderItem={renderItem}
+      />
+    </View>
   );
 }
