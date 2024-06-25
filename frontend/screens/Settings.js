@@ -98,6 +98,7 @@ export default function Settings() {
 const lightTheme = {
   container: {
     backgroundColor: "#ffffff",
+    padding: 15,
   },
   title: {
     fontSize: 24,
@@ -127,6 +128,7 @@ const lightTheme = {
 const darkTheme = {
   container: {
     backgroundColor: "#1a1a1a",
+    padding: 15,
   },
   title: {
     fontSize: 24,
