@@ -30,7 +30,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.5:8080"); // Replace with your backend URL
+        const response = await axios.get("http://192.168.56.1:8080"); // Replace with your backend URL
         const data = response.data;
 
         if (data.length > 0) {
@@ -66,7 +66,7 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      const response = await axios.post("http://192.168.1.5:8080/update-profile", {
+      const response = await axios.post("http://192.168.56.1:8080/update-profile", {
         username,
         email,
         bio,
@@ -106,7 +106,7 @@ export default function Profile() {
     });
 
     try {
-      const response = await fetch("http://192.168.1.5:8080/upload-profile-pic", {
+      const response = await fetch("http://192.168.56.1:8080/upload-profile-pic", {
         method: "POST",
         body: formData,
         headers: {
