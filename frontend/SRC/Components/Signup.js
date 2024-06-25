@@ -120,6 +120,7 @@ const Signup = (props) => {
                 color: darkGreen,
                 fontSize: 16,
                 fontWeight: "bold",
+                marginTop: 10,
               }}
             >
               Already have an account?{" "}
@@ -128,7 +129,13 @@ const Signup = (props) => {
               onPress={() => props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}
+                style={{
+                  color: "lightgrey",
+                  marginTop: 10,
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  textDecorationLine: "underline",
+                }}
               >
                 Login
               </Text>

@@ -114,6 +114,7 @@ const Login = (props) => {
                   fontWeight: "bold",
                   fontSize: 16,
                   textAlign: "center",
+                  textDecorationLine: "underline",
                 }}
               >
                 Signup
