@@ -40,7 +40,7 @@ const Signup = (props) => {
             backgroundColor: "hsla(0, 0%, 80%, 0.3)",
             width: containerWidth,
             borderTopLeftRadius: 130,
-            paddingTop: 50,
+            paddingTop: 60,
             paddingBottom: 20,
             alignItems: "center",
             marginTop: 10,
