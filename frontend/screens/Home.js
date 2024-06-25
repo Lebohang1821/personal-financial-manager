@@ -13,7 +13,7 @@ const homeStyles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    color: "#4CAF50",
+    color: "#006A42",
   },
   description: {
     fontSize: 16,

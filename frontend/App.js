@@ -48,10 +48,10 @@ function MainTabs({ darkModeEnabled }) {
               <Entypo
                 name="home"
                 size={24}
-                color={focused ? "#ff0000" : "#111"}
+                color={focused ? "#006A42" : "#111"}
               />
               <Text
-                style={{ fontSize: 12, color: focused ? "#ff0000" : "#111" }}
+                style={{ fontSize: 12, color: focused ? "#006A42" : "#111" }}
               >
                 HOME
               </Text>
@@ -68,10 +68,10 @@ function MainTabs({ darkModeEnabled }) {
               <Entypo
                 name="wallet"
                 size={24}
-                color={focused ? "#ff0000" : "#111"}
+                color={focused ? "#006A42" : "#111"}
               />
               <Text
-                style={{ fontSize: 12, color: focused ? "#ff0000" : "#111" }}
+                style={{ fontSize: 12, color: focused ? "#006A42" : "#111" }}
               >
                 WALLET
               </Text>
@@ -88,7 +88,7 @@ function MainTabs({ darkModeEnabled }) {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: focused ? "#ff0000" : "#111",
+                backgroundColor: focused ? "#006A42" : "#111",
                 width: Platform.OS === "ios" ? 50 : 60,
                 height: Platform.OS === "ios" ? 50 : 60,
                 top: Platform.OS === "ios" ? -10 : -20,
@@ -109,10 +109,10 @@ function MainTabs({ darkModeEnabled }) {
               <MaterialIcons
                 name="person"
                 size={24}
-                color={focused ? "#ff0000" : "#111"}
+                color={focused ? "#006A42" : "#111"}
               />
               <Text
-                style={{ fontSize: 12, color: focused ? "#ff0000" : "#111" }}
+                style={{ fontSize: 12, color: focused ? "#006A42" : "#111" }}
               >
                 PROFILE
               </Text>
@@ -129,10 +129,10 @@ function MainTabs({ darkModeEnabled }) {
               <Ionicons
                 name="settings"
                 size={24}
-                color={focused ? "#ff0000" : "#111"}
+                color={focused ? "#006A42" : "#111"}
               />
               <Text
-                style={{ fontSize: 12, color: focused ? "#ff0000" : "#111" }}
+                style={{ fontSize: 12, color: focused ? "#006A42" : "#111" }}
               >
                 SETTINGS
               </Text>
