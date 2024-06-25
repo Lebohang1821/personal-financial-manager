@@ -30,9 +30,10 @@ const Login = (props) => {
               backgroundColor: "hsla(0, 0%, 80%, 0.3)",
               width: containerWidth,
               borderTopLeftRadius: 130,
-              paddingTop: 100,
+              paddingTop: 70,
               alignItems: "center",
               marginTop: 70,
+              paddingBottom: 20,
               borderBottomRightRadius: 45,
             }}
           >
