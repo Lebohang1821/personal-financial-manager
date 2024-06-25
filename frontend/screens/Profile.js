@@ -66,14 +66,28 @@ export default function Profile() {
 
   const handleSave = async () => {
     try {
-      const response = await axios.post("http://192.168.56.1:8080/update-profile", {
-        username,
-        email,
-        bio,
-        phoneNumber,
-        bankName,
-        bankType,
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("bio", bio);
+      formData.append("phoneNumber", phoneNumber);
+      formData.append("bankName", bankName);
+      formData.append("bankType", bankType);
+  
+      if (profilePic && profilePic !== "https://via.placeholder.com/150") {
+        formData.append("profilePic", {
+          uri: profilePic,
+          type: "image/jpeg",
+          name: "profilePic.jpg",
+        });
+      }
+  
+      const response = await axios.post("http://192.168.56.1:8080/update-profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+  
       setIsEditing(false);
       alert("Profile saved successfully");
       console.log("Profile saved:", response.data); // Log response for debugging
@@ -82,6 +96,7 @@ export default function Profile() {
       alert("Failed to save profile. Please try again later.");
     }
   };
+  
 
   const handleChooseImage = async () => {
     const permissionResult =
