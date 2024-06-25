@@ -41,8 +41,16 @@ const homeStyles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
     alignItems: "center",
-    backgroundColor: "#b8b8b8",
+    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, // Android shadow
   },
   logo: {
     width: 80,

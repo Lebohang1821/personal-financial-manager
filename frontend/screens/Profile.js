@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   Profilecontainer: {
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "#b8b8b8",
+    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
     borderBottomWidth: 2,
     padding: 15,
     borderRadius: 10,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: "#919191",
+    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
     borderBottomWidth: 2,
     padding: 15,
     borderRadius: 10,

@@ -38,7 +38,7 @@ const homeStyles = StyleSheet.create({
 const mockupStyles = StyleSheet.create({
   mockupContainer: {
     padding: 20,
-    backgroundColor: "#919191",
+    backgroundColor: "hsla(0, 0%, 94%, 1.0)",
     borderRadius: 10,
     marginBottom: 20,
     shadowColor: "#000",
