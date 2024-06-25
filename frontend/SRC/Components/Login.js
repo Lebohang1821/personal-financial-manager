@@ -18,7 +18,8 @@ const Login = (props) => {
               color: "white",
               fontSize: 64,
               fontWeight: "bold",
-              marginVertical: 20,
+              marginTop: 60, // Adjusted marginTop to move "Login" text below
+              marginBottom: 10,
               textAlign: "center",
             }}
           >
