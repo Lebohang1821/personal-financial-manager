@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 20,
     paddingTop: 10,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#f0f8ff",
     paddingBottom: 79,
   },
   Profilecontainer: {

@@ -87,7 +87,7 @@ const transactionStyles = {
   container: {
     flex: 1,
     padding: 15,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0f8ff",
     paddingBottom: 59,
   },
   monthHeading: {

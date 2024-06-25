@@ -116,7 +116,11 @@ const Signup = (props) => {
         <View style={{ alignItems: "center", marginBottom: 20 }}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Text
-              style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}
+              style={{
+                color: darkGreen,
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
             >
               Already have an account?{" "}
             </Text>
@@ -124,7 +128,7 @@ const Signup = (props) => {
               onPress={() => props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: darkGreen, fontSize: 16, fontWeight: "bold" }}
+                style={{ color: "lightgrey", fontSize: 16, fontWeight: "bold" }}
               >
                 Login
               </Text>

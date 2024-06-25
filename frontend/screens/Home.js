@@ -17,7 +17,7 @@ const homeStyles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingTop: 15,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0f8ff",
     paddingBottom: 59,
   },
   heading: {

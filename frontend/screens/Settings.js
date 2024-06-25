@@ -97,7 +97,7 @@ export default function Settings() {
 
 const lightTheme = {
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f0f8ff",
     padding: 15,
   },
   title: {
