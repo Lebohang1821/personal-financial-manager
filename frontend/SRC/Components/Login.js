@@ -49,7 +49,7 @@ const Login = (props) => {
             </Text>
             <Text
               style={{
-                color: "grey",
+                color: "white",
                 fontSize: 19,
                 fontWeight: "bold",
                 marginBottom: 20,
