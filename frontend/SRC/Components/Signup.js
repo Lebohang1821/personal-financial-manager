@@ -56,7 +56,7 @@ const Signup = (props) => {
             containerStyle={{ marginBottom: 10, width: "78%" }}
           />
           <Field
-            placeholder="Email / Username"
+            placeholder="Email Address"
             keyboardType={"email-address"}
             containerStyle={{ marginBottom: 10, width: "78%" }}
           />
