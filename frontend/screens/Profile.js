@@ -30,7 +30,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://192.168.56.1:8080"); // Replace with your backend URL
+        const response = await axios.get("http://192.168.56.1:8080");
         const data = response.data;
 
         if (data.length > 0) {
@@ -50,7 +50,7 @@ export default function Profile() {
           setPhoneNumber(Phone_number);
           setBankName(Bank_name);
           setBankType(Bank_type);
-          setProfilePic(Profile_pic); // Assuming Profile_pic is a URL
+          setProfilePic(Profile_pic);
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -94,7 +94,7 @@ export default function Profile() {
 
       setIsEditing(false);
       alert("Profile saved successfully");
-      console.log("Profile saved:", response.data); // Log response for debugging
+      console.log("Profile saved:", response.data);
     } catch (error) {
       console.error("Error saving profile:", error);
       alert("Failed to save profile. Please try again later.");
@@ -141,7 +141,7 @@ export default function Profile() {
 
       const imageUrl = await response.text();
       setProfilePic(imageUrl);
-      console.log("Image uploaded successfully:", imageUrl); // Log URL for debugging
+      console.log("Image uploaded successfully:", imageUrl);
     } catch (error) {
       console.error("Error uploading profile picture:", error);
       alert("Failed to upload profile picture. Please try again later.");
