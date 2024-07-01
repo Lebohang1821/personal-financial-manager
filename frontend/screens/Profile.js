@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 
@@ -20,8 +19,6 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [bankName, setBankName] = useState("Select Bank");
-  const [bankType, setBankType] = useState("Select Type");
   const [profilePic, setProfilePic] = useState(
     "https://via.placeholder.com/150"
   );
@@ -30,7 +27,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get("http://192.168.56.1:8080"); // Replace with your backend URL
+        const response = await axios.get("http://192.168.56.1:8080");
         const data = response.data;
 
         if (data.length > 0) {
@@ -39,8 +36,6 @@ export default function Profile() {
             Email,
             Bio,
             Phone_number,
-            Bank_name,
-            Bank_type,
             Profile_pic,
           } = data[0];
 
@@ -48,9 +43,7 @@ export default function Profile() {
           setEmail(Email);
           setBio(Bio);
           setPhoneNumber(Phone_number);
-          setBankName(Bank_name);
-          setBankType(Bank_type);
-          setProfilePic(Profile_pic); // Assuming Profile_pic is a URL
+          setProfilePic(Profile_pic);
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -71,8 +64,6 @@ export default function Profile() {
       formData.append("email", email);
       formData.append("bio", bio);
       formData.append("phoneNumber", phoneNumber);
-      formData.append("bankName", bankName);
-      formData.append("bankType", bankType);
 
       if (profilePic && profilePic !== "https://via.placeholder.com/150") {
         formData.append("profilePic", {
@@ -94,7 +85,7 @@ export default function Profile() {
 
       setIsEditing(false);
       alert("Profile saved successfully");
-      console.log("Profile saved:", response.data); // Log response for debugging
+      console.log("Profile saved:", response.data);
     } catch (error) {
       console.error("Error saving profile:", error);
       alert("Failed to save profile. Please try again later.");
@@ -141,7 +132,7 @@ export default function Profile() {
 
       const imageUrl = await response.text();
       setProfilePic(imageUrl);
-      console.log("Image uploaded successfully:", imageUrl); // Log URL for debugging
+      console.log("Image uploaded successfully:", imageUrl);
     } catch (error) {
       console.error("Error uploading profile picture:", error);
       alert("Failed to upload profile picture. Please try again later.");
@@ -209,44 +200,6 @@ export default function Profile() {
               />
             ) : (
               <Text style={styles.text}>{phoneNumber}</Text>
-            )}
-          </View>
-          <View style={styles.field}>
-            <Text style={styles.label}>Bank Name:</Text>
-            {isEditing ? (
-              <Picker
-                style={styles.input}
-                selectedValue={bankName}
-                onValueChange={(itemValue) => setBankName(itemValue)}
-              >
-                <Picker.Item label="Select Bank" value="Select Bank" />
-                <Picker.Item label="Capitec" value="Capitec" />
-                <Picker.Item label="Standard Bank" value="Standard Bank" />
-                <Picker.Item label="FNB" value="FNB" />
-                <Picker.Item label="Time Bank" value="Time Bank" />
-                <Picker.Item label="ABSA" value="ABSA Bank" />
-                {/* Add more bank options as needed */}
-              </Picker>
-            ) : (
-              <Text style={styles.text}>{bankName}</Text>
-            )}
-          </View>
-          <View style={styles.field}>
-            <Text style={styles.label}>Bank Type:</Text>
-            {isEditing ? (
-              <Picker
-                style={styles.input}
-                selectedValue={bankType}
-                onValueChange={(itemValue) => setBankType(itemValue)}
-              >
-                <Picker.Item label="Select Type" value="Select Type" />
-                <Picker.Item label="Savings" value="Savings" />
-                <Picker.Item label="Checking" value="Checking" />
-                <Picker.Item label="Investment" value="Investment" />
-                {/* Add more bank type options as needed */}
-              </Picker>
-            ) : (
-              <Text style={styles.text}>{bankType}</Text>
             )}
           </View>
         </View>

@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextInput, Button } from "react-native";
 
 const accountsData = [
   {
@@ -22,12 +22,22 @@ const accountsData = [
 ];
 
 const homeStyles = StyleSheet.create({
+  headingContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
     color: "#006A42",
+  },
+  plusButton: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#006A42",
+    paddingRight: 15,
   },
   container: {
     flex: 1,
@@ -61,9 +71,59 @@ const homeStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalView: {
+    width: 300,
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 8,
+    borderRadius: 5,
+  },
+  modalButton: {
+    marginTop: 10,
+    width: 200,
+  },
 });
 
 export default function Wallet() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newBankName, setNewBankName] = useState("");
+  const [newAccountNumber, setNewAccountNumber] = useState("");
+  const [newCardNumber, setNewCardNumber] = useState("");
+
+  const handleAddCard = () => {
+    setModalVisible(true);
+  };
+
+  const handleSaveCard = () => {
+    // Handle saving the new card information
+    // You can add the new card to accountsData or handle it according to your needs
+    setModalVisible(false);
+  };
+
   const renderItem = ({ item }) => (
     <View style={homeStyles.accountItem}>
       <Image source={item.logo} style={homeStyles.logo} />
@@ -78,12 +138,58 @@ export default function Wallet() {
 
   return (
     <View style={homeStyles.container}>
-      <Text style={homeStyles.heading}>Your Banks Names</Text>
+      <View style={homeStyles.headingContainer}>
+        <Text style={homeStyles.heading}>Wallet</Text>
+        <TouchableOpacity onPress={handleAddCard}>
+          <Text style={homeStyles.plusButton}>+</Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={accountsData}
         keyExtractor={(account) => account.id.toString()}
         renderItem={renderItem}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={homeStyles.centeredView}>
+          <View style={homeStyles.modalView}>
+            <Text>Bank Name</Text>
+            <TextInput
+              style={homeStyles.input}
+              onChangeText={setNewBankName}
+              value={newBankName}
+            />
+            <Text>Account Number</Text>
+            <TextInput
+              style={homeStyles.input}
+              onChangeText={setNewAccountNumber}
+              value={newAccountNumber}
+            />
+            <Text>Card Number</Text>
+            <TextInput
+              style={homeStyles.input}
+              onChangeText={setNewCardNumber}
+              value={newCardNumber}
+            />
+            <View style={homeStyles.modalButton}>
+              <Button title="Save" onPress={handleSaveCard} />
+            </View>
+            <View style={homeStyles.modalButton}>
+              <Button
+                title="Cancel"
+                onPress={() => setModalVisible(false)}
+                color="#FF0000"
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

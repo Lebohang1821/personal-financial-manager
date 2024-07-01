@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 
 // Route to update user profile information including profile picture
 app.post('/update-profile', upload.single('profilePic'), (req, res) => {
-  const { username, email, bio, phoneNumber, bankName, bankType } = req.body;
+  const { username, email, bio, phoneNumber } = req.body;
   const profilePicPath = req.file ? req.file.path : null;
 
   pool.getConnection((err, connection) => {
@@ -61,11 +61,11 @@ app.post('/update-profile', upload.single('profilePic'), (req, res) => {
 
     const sql = `
       UPDATE customer_profile 
-      SET Username=?, Email=?, Bio=?, Phone_number=?, Bank_name=?, Bank_type=?, Profile_pic=? 
+      SET Username=?, Email=?, Bio=?, Phone_number=?, Profile_pic=? 
       WHERE Customer_id=1
     `;
 
-    const values = [username, email, bio, phoneNumber, bankName, bankType, profilePicPath];
+    const values = [username, email, bio, phoneNumber, profilePicPath];
     
     connection.query(sql, values, (error, results) => {
       connection.release();
