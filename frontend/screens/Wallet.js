@@ -409,19 +409,6 @@ export default function Wallet() {
         <View style={homeStyles.centeredView}>
           <View style={homeStyles.modalView}>
             <Text>Bank Name</Text>
-            <Picker
-              style={homeStyles.input}
-              selectedValue={newBankName}
-              onValueChange={(itemValue) => setNewBankName(itemValue)}
-            >
-              {initialAccountsData.map((bank) => (
-                <Picker.Item
-                  key={bank.bankName}
-                  label={bank.bankName}
-                  value={bank.bankName}
-                />
-              ))}
-            </Picker>
             <Text>Account Number</Text>
             <TextInput
               style={homeStyles.input}
