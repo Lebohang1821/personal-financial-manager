@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextInput, Button, Alert } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Picker } from '@react-native-picker/picker';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  Button,
+  Alert,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Picker } from "@react-native-picker/picker";
 
 const homeStyles = StyleSheet.create({
   headingContainer: {
@@ -43,7 +54,7 @@ const homeStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5, // Android shadow
-    position: 'relative', // to position delete button
+    position: "relative", // to position delete button
   },
   logo: {
     width: 80,
@@ -73,7 +84,7 @@ const homeStyles = StyleSheet.create({
     elevation: 5,
   },
   input: {
-    width: '100%',
+    width: "100%",
     height: 40,
     borderColor: "#ccc",
     borderWidth: 1,
@@ -86,6 +97,39 @@ const homeStyles = StyleSheet.create({
   },
 });
 
+const initialAccountsData = [
+  {
+    bankName: "ABSA",
+    logo: require("./assets/absa-logo.png"), // update the path to your actual logo image
+    logoUri: "./assets/absa-logo.png", // update the path to your actual logo image
+  },
+  {
+    bankName: "Standard Bank",
+    logo: require("./assets/standard-bank-logo.png"),
+    logoUri: "./assets/standard-bank-logo.png",
+  },
+  {
+    bankName: "Capitec Bank",
+    logo: require("./assets/capitec-bank-logo.png"),
+    logoUri: "./assets/capitec-bank-logo.png",
+  },
+  {
+    bankName: "FNB",
+    logo: require("./assets/fnb-logo.png"),
+    logoUri: "./assets/fnb-logo.png",
+  },
+  {
+    bankName: "African Bank",
+    logo: require("./assets/african-bank-logo.png"),
+    logoUri: "./assets/african-bank-logo.png",
+  },
+  {
+    bankName: "Nedbank",
+    logo: require("./assets/nedbank-logo.png"),
+    logoUri: "./assets/nedbank-logo.png",
+  },
+  // Add more banks as needed
+];
 
 export default function Wallet() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -100,7 +144,7 @@ export default function Wallet() {
 
   const loadAccounts = async () => {
     try {
-      const storedAccounts = await AsyncStorage.getItem('accounts');
+      const storedAccounts = await AsyncStorage.getItem("accounts");
       if (storedAccounts) {
         setAccounts(JSON.parse(storedAccounts));
       } else {
@@ -113,7 +157,7 @@ export default function Wallet() {
 
   const saveAccounts = async (accountsToSave) => {
     try {
-      await AsyncStorage.setItem('accounts', JSON.stringify(accountsToSave));
+      await AsyncStorage.setItem("accounts", JSON.stringify(accountsToSave));
     } catch (error) {
       console.error("Failed to save accounts to storage", error);
     }
@@ -124,8 +168,9 @@ export default function Wallet() {
   };
 
   const handleSaveCard = async () => {
-    // Find selected bank's logo URI
-    const selectedBank = initialAccountsData.find(bank => bank.bankName === newBankName);
+    const selectedBank = initialAccountsData.find(
+      (bank) => bank.bankName === newBankName
+    );
     if (!selectedBank) {
       Alert.alert("Error", "Bank logo not found for the selected bank.");
       return;
@@ -138,7 +183,7 @@ export default function Wallet() {
       cardNumber: newCardNumber,
       balance: 0, // Default balance for new cards
       logo: selectedBank.logo, // Use selected bank's logo
-      logoUri: selectedBank.logoUri // Store URI of selected bank's logo
+      logoUri: selectedBank.logoUri, // Store URI of selected bank's logo
     };
 
     const updatedAccounts = [...accounts, newCard];
@@ -153,7 +198,7 @@ export default function Wallet() {
   };
 
   const handleDeleteCard = async (cardId) => {
-    const updatedAccounts = accounts.filter(account => account.id !== cardId);
+    const updatedAccounts = accounts.filter((account) => account.id !== cardId);
     setAccounts(updatedAccounts);
     await saveAccounts(updatedAccounts);
   };
@@ -169,9 +214,9 @@ export default function Wallet() {
       </View>
       <TouchableOpacity
         onPress={() => handleDeleteCard(item.id)}
-        style={{ position: 'absolute', right: 10 }}
+        style={{ position: "absolute", right: 10 }}
       >
-        <Text style={{ color: 'red', fontSize: 18 }}>X</Text>
+        <Text style={{ color: "red", fontSize: 18 }}>X</Text>
       </TouchableOpacity>
     </View>
   );
@@ -205,13 +250,13 @@ export default function Wallet() {
               selectedValue={newBankName}
               onValueChange={(itemValue) => setNewBankName(itemValue)}
             >
-              <Picker.Item label="ABSA" value="ABSA" />
-              <Picker.Item label="Standard Bank" value="Standard Bank" />
-              <Picker.Item label="Capitec Bank" value="Capitec bank" />
-              <Picker.Item label="FNB" value="FNB" />
-              <Picker.Item label="African Bank" value="African bank" />
-              <Picker.Item label="Nedbank" value="Nedbank" />
-              {/* Add more banks as needed */}
+              {initialAccountsData.map((bank) => (
+                <Picker.Item
+                  key={bank.bankName}
+                  label={bank.bankName}
+                  value={bank.bankName}
+                />
+              ))}
             </Picker>
             <Text>Account Number</Text>
             <TextInput
