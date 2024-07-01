@@ -214,9 +214,11 @@ export default function Wallet() {
       </View>
       <TouchableOpacity
         onPress={() => handleDeleteCard(item.id)}
-        style={{ position: "absolute", right: 10 }}
+        style={{ position: "absolute", top: 11, right: 15 }}
       >
-        <Text style={{ color: "red", fontSize: 18 }}>X</Text>
+        <Text style={{ color: "red", fontSize: 18, fontWeight: "bold" }}>
+          X
+        </Text>
       </TouchableOpacity>
     </View>
   );
