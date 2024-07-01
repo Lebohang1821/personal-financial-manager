@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
   TextInput,
   Button,
   Alert,
+  RefreshControl,
+  Share,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
@@ -116,6 +118,17 @@ const homeStyles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  shareButton: {
+    backgroundColor: "green",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 75,
+    marginLeft: 10,
+  },
+  shareButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
 });
 
 const initialAccountsData = [
@@ -160,6 +173,7 @@ export default function Wallet() {
   const [newCardNumber, setNewCardNumber] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadAccounts();
@@ -257,6 +271,16 @@ export default function Wallet() {
     Alert.alert("Success", "Card updated successfully");
   };
 
+  const handleShareCard = async (account) => {
+    try {
+      await Share.share({
+        message: `Bank Name: ${account.bankName}\nAccount Number: ${account.accountNumber}`,
+      });
+    } catch (error) {
+      Alert.alert("Error", "Failed to share the account information.");
+    }
+  };
+
   const renderRightActions = (itemId) => (
     <TouchableOpacity
       style={homeStyles.deleteButton}
@@ -267,12 +291,20 @@ export default function Wallet() {
   );
 
   const renderLeftActions = (item) => (
-    <TouchableOpacity
-      style={homeStyles.editButton}
-      onPress={() => handleEditCard(item)}
-    >
-      <Text style={homeStyles.editButtonText}>Edit</Text>
-    </TouchableOpacity>
+    <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity
+        style={homeStyles.editButton}
+        onPress={() => handleEditCard(item)}
+      >
+        <Text style={homeStyles.editButtonText}>Edit</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={homeStyles.shareButton}
+        onPress={() => handleShareCard(item)}
+      >
+        <Text style={homeStyles.shareButtonText}>Share</Text>
+      </TouchableOpacity>
+    </View>
   );
 
   const renderItem = ({ item }) => (
@@ -292,6 +324,11 @@ export default function Wallet() {
     </Swipeable>
   );
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadAccounts().then(() => setRefreshing(false));
+  }, []);
+
   return (
     <View style={homeStyles.container}>
       <View style={homeStyles.headingContainer}>
@@ -304,6 +341,9 @@ export default function Wallet() {
         data={accounts}
         keyExtractor={(account) => account.id.toString()}
         renderItem={renderItem}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       <Modal
         animationType="slide"
