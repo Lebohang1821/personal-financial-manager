@@ -95,6 +95,8 @@ const homeStyles = StyleSheet.create({
   },
   modalButton: {
     marginTop: 10,
+    width: 200,
+    borderRadius: 5,
   },
   deleteButton: {
     backgroundColor: "red",
