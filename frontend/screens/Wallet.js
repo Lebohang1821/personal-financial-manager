@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextInput, Button, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
 
 const initialAccountsData = [
   {
@@ -197,11 +198,15 @@ export default function Wallet() {
         <View style={homeStyles.centeredView}>
           <View style={homeStyles.modalView}>
             <Text>Bank Name</Text>
-            <TextInput
+            <Picker
               style={homeStyles.input}
-              onChangeText={setNewBankName}
-              value={newBankName}
-            />
+              selectedValue={newBankName}
+              onValueChange={(itemValue) => setNewBankName(itemValue)}
+            >
+              <Picker.Item label="ABSA" value="ABSA" />
+              <Picker.Item label="Standard Bank" value="Standard Bank" />
+              {/* Add more banks as needed */}
+            </Picker>
             <Text>Account Number</Text>
             <TextInput
               style={homeStyles.input}
