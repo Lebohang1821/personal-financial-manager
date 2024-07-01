@@ -100,33 +100,33 @@ const homeStyles = StyleSheet.create({
 const initialAccountsData = [
   {
     bankName: "ABSA",
-    logo: require("./assets/absa-logo.png"), // update the path to your actual logo image
-    logoUri: "./assets/absa-logo.png", // update the path to your actual logo image
+    logo: require("./assets/ABSA.png"), // update the path to your actual logo image
+    logoUri: "./assets/ABSA.png", // update the path to your actual logo image
   },
   {
     bankName: "Standard Bank",
-    logo: require("./assets/standard-bank-logo.png"),
-    logoUri: "./assets/standard-bank-logo.png",
+    logo: require("./assets/Standard-Bank.png"),
+    logoUri: "./assets/Standard-Bank.png",
   },
   {
     bankName: "Capitec Bank",
-    logo: require("./assets/capitec-bank-logo.png"),
-    logoUri: "./assets/capitec-bank-logo.png",
+    logo: require("./assets/Capitec-Bank.png"),
+    logoUri: "./assets/Capitec-Bank.png",
   },
   {
     bankName: "FNB",
-    logo: require("./assets/fnb-logo.png"),
-    logoUri: "./assets/fnb-logo.png",
+    logo: require("./assets/FNB.png"),
+    logoUri: "./assets/FNB.png",
   },
   {
     bankName: "African Bank",
-    logo: require("./assets/african-bank-logo.png"),
-    logoUri: "./assets/african-bank-logo.png",
+    logo: require("./assets/African-bank.svg"),
+    logoUri: "./assets/African-bank.svg",
   },
   {
     bankName: "Nedbank",
-    logo: require("./assets/nedbank-logo.png"),
-    logoUri: "./assets/nedbank-logo.png",
+    logo: require("./assets/Nedbank.png"),
+    logoUri: "./assets/Nedbank.png",
   },
   // Add more banks as needed
 ];
