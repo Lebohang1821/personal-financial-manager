@@ -3,7 +3,6 @@ import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextI
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
-
 const homeStyles = StyleSheet.create({
   headingContainer: {
     flexDirection: "row",
@@ -44,6 +43,7 @@ const homeStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5, // Android shadow
+    position: 'relative', // to position delete button
   },
   logo: {
     width: 80,
@@ -85,6 +85,7 @@ const homeStyles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
 
 export default function Wallet() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -151,6 +152,12 @@ export default function Wallet() {
     Alert.alert("Success", "Card saved successfully");
   };
 
+  const handleDeleteCard = async (cardId) => {
+    const updatedAccounts = accounts.filter(account => account.id !== cardId);
+    setAccounts(updatedAccounts);
+    await saveAccounts(updatedAccounts);
+  };
+
   const renderItem = ({ item }) => (
     <View style={homeStyles.accountItem}>
       <Image source={item.logo} style={homeStyles.logo} />
@@ -160,6 +167,12 @@ export default function Wallet() {
         <Text>Card Number: {item.cardNumber}</Text>
         <Text>Balance: R {item.balance.toFixed(2)}</Text>
       </View>
+      <TouchableOpacity
+        onPress={() => handleDeleteCard(item.id)}
+        style={{ position: 'absolute', right: 10 }}
+      >
+        <Text style={{ color: 'red', fontSize: 18 }}>X</Text>
+      </TouchableOpacity>
     </View>
   );
 
