@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextInput, Button, Alert } from "react-native";
-import * as FileSystem from 'expo-file-system';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const accountsData = [
+const initialAccountsData = [
   {
     id: 1,
     bankName: "ABSA",
@@ -68,10 +68,6 @@ const homeStyles = StyleSheet.create({
     height: 90,
     marginRight: 10,
   },
-  bankName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -113,6 +109,32 @@ export default function Wallet() {
   const [newBankName, setNewBankName] = useState("");
   const [newAccountNumber, setNewAccountNumber] = useState("");
   const [newCardNumber, setNewCardNumber] = useState("");
+  const [accounts, setAccounts] = useState([]);
+
+  useEffect(() => {
+    loadAccounts();
+  }, []);
+
+  const loadAccounts = async () => {
+    try {
+      const storedAccounts = await AsyncStorage.getItem('accounts');
+      if (storedAccounts) {
+        setAccounts(JSON.parse(storedAccounts));
+      } else {
+        setAccounts(initialAccountsData); // Load initial data if no stored data found
+      }
+    } catch (error) {
+      console.error("Failed to load accounts from storage", error);
+    }
+  };
+
+  const saveAccounts = async (accountsToSave) => {
+    try {
+      await AsyncStorage.setItem('accounts', JSON.stringify(accountsToSave));
+    } catch (error) {
+      console.error("Failed to save accounts to storage", error);
+    }
+  };
 
   const handleAddCard = () => {
     setModalVisible(true);
@@ -120,18 +142,23 @@ export default function Wallet() {
 
   const handleSaveCard = async () => {
     const newCard = {
+      id: accounts.length + 1,
       bankName: newBankName,
       accountNumber: newAccountNumber,
       cardNumber: newCardNumber,
+      balance: 0, // Default balance for new cards
+      logo: require("./assets/logo.png"), // Placeholder for new card logo
     };
-    const path = `${FileSystem.documentDirectory}${newBankName}_card.txt`;
-    try {
-      await FileSystem.writeAsStringAsync(path, JSON.stringify(newCard));
-      Alert.alert("Success", "Card saved successfully");
-    } catch (error) {
-      Alert.alert("Error", "Failed to save card");
-    }
+
+    const updatedAccounts = [...accounts, newCard];
+    setAccounts(updatedAccounts);
+    await saveAccounts(updatedAccounts);
+
     setModalVisible(false);
+    setNewBankName("");
+    setNewAccountNumber("");
+    setNewCardNumber("");
+    Alert.alert("Success", "Card saved successfully");
   };
 
   const renderItem = ({ item }) => (
@@ -155,7 +182,7 @@ export default function Wallet() {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={accountsData}
+        data={accounts}
         keyExtractor={(account) => account.id.toString()}
         renderItem={renderItem}
       />
