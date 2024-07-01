@@ -3,25 +3,6 @@ import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextI
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
-const initialAccountsData = [
-  {
-    id: 1,
-    bankName: "ABSA",
-    accountNumber: "123456789",
-    cardNumber: "**** **** **** 1234",
-    balance: 5000,
-    logo: require("./assets/absa_logo.png"), // Import ABSA logo
-  },
-  {
-    id: 2,
-    bankName: "Standard Bank",
-    accountNumber: "987654321",
-    cardNumber: "**** **** **** 5678",
-    balance: 2500,
-    logo: require("./assets/standard_bank_logo.png"),
-  },
-  // Add more accounts as needed
-];
 
 const homeStyles = StyleSheet.create({
   headingContainer: {
@@ -142,13 +123,21 @@ export default function Wallet() {
   };
 
   const handleSaveCard = async () => {
+    // Find selected bank's logo URI
+    const selectedBank = initialAccountsData.find(bank => bank.bankName === newBankName);
+    if (!selectedBank) {
+      Alert.alert("Error", "Bank logo not found for the selected bank.");
+      return;
+    }
+
     const newCard = {
       id: accounts.length + 1,
       bankName: newBankName,
       accountNumber: newAccountNumber,
       cardNumber: newCardNumber,
       balance: 0, // Default balance for new cards
-      logo: require("./assets/logo.png"), // Placeholder for new card logo
+      logo: selectedBank.logo, // Use selected bank's logo
+      logoUri: selectedBank.logoUri // Store URI of selected bank's logo
     };
 
     const updatedAccounts = [...accounts, newCard];
@@ -205,6 +194,10 @@ export default function Wallet() {
             >
               <Picker.Item label="ABSA" value="ABSA" />
               <Picker.Item label="Standard Bank" value="Standard Bank" />
+              <Picker.Item label="Capitec Bank" value="Capitec bank" />
+              <Picker.Item label="FNB" value="FNB" />
+              <Picker.Item label="African Bank" value="African bank" />
+              <Picker.Item label="Nedbank" value="Nedbank" />
               {/* Add more banks as needed */}
             </Picker>
             <Text>Account Number</Text>
@@ -225,7 +218,9 @@ export default function Wallet() {
             <View style={homeStyles.modalButton}>
               <Button
                 title="Cancel"
-                onPress={() => setModalVisible(false)}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
                 color="#FF0000"
               />
             </View>
