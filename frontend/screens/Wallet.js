@@ -104,6 +104,7 @@ const homeStyles = StyleSheet.create({
   },
   modalButton: {
     marginTop: 10,
+    width: 200,
   },
 });
 
