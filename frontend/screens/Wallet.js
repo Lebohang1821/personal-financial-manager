@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
+import { Swipeable } from "react-native-gesture-handler";
 
 const homeStyles = StyleSheet.create({
   headingContainer: {
@@ -95,6 +96,26 @@ const homeStyles = StyleSheet.create({
   modalButton: {
     marginTop: 10,
   },
+  deleteButton: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 75,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  editButton: {
+    backgroundColor: "blue",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 75,
+  },
+  editButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
 });
 
 const initialAccountsData = [
@@ -133,10 +154,12 @@ const initialAccountsData = [
 
 export default function Wallet() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [newBankName, setNewBankName] = useState("");
   const [newAccountNumber, setNewAccountNumber] = useState("");
   const [newCardNumber, setNewCardNumber] = useState("");
   const [accounts, setAccounts] = useState([]);
+  const [selectedAccount, setSelectedAccount] = useState(null);
 
   useEffect(() => {
     loadAccounts();
@@ -203,24 +226,70 @@ export default function Wallet() {
     await saveAccounts(updatedAccounts);
   };
 
+  const handleEditCard = (account) => {
+    setSelectedAccount(account);
+    setNewBankName(account.bankName);
+    setNewAccountNumber(account.accountNumber);
+    setNewCardNumber(account.cardNumber);
+    setEditModalVisible(true);
+  };
+
+  const handleSaveEdit = async () => {
+    const updatedAccounts = accounts.map((account) =>
+      account.id === selectedAccount.id
+        ? {
+            ...account,
+            bankName: newBankName,
+            accountNumber: newAccountNumber,
+            cardNumber: newCardNumber,
+          }
+        : account
+    );
+
+    setAccounts(updatedAccounts);
+    await saveAccounts(updatedAccounts);
+
+    setEditModalVisible(false);
+    setSelectedAccount(null);
+    setNewBankName("");
+    setNewAccountNumber("");
+    setNewCardNumber("");
+    Alert.alert("Success", "Card updated successfully");
+  };
+
+  const renderRightActions = (itemId) => (
+    <TouchableOpacity
+      style={homeStyles.deleteButton}
+      onPress={() => handleDeleteCard(itemId)}
+    >
+      <Text style={homeStyles.deleteButtonText}>Delete</Text>
+    </TouchableOpacity>
+  );
+
+  const renderLeftActions = (item) => (
+    <TouchableOpacity
+      style={homeStyles.editButton}
+      onPress={() => handleEditCard(item)}
+    >
+      <Text style={homeStyles.editButtonText}>Edit</Text>
+    </TouchableOpacity>
+  );
+
   const renderItem = ({ item }) => (
-    <View style={homeStyles.accountItem}>
-      <Image source={item.logo} style={homeStyles.logo} />
-      <View>
-        <Text style={homeStyles.bankName}>{item.bankName}</Text>
-        <Text>Account Number: {item.accountNumber}</Text>
-        <Text>Card Number: {item.cardNumber}</Text>
-        <Text>Balance: R {item.balance.toFixed(2)}</Text>
+    <Swipeable
+      renderRightActions={() => renderRightActions(item.id)}
+      renderLeftActions={() => renderLeftActions(item)}
+    >
+      <View style={homeStyles.accountItem}>
+        <Image source={item.logo} style={homeStyles.logo} />
+        <View>
+          <Text style={homeStyles.bankName}>{item.bankName}</Text>
+          <Text>Account Number: {item.accountNumber}</Text>
+          <Text>Card Number: {item.cardNumber}</Text>
+          <Text>Balance: R {item.balance.toFixed(2)}</Text>
+        </View>
       </View>
-      <TouchableOpacity
-        onPress={() => handleDeleteCard(item.id)}
-        style={{ position: "absolute", top: 11, right: 15 }}
-      >
-        <Text style={{ color: "red", fontSize: 18, fontWeight: "bold" }}>
-          X
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </Swipeable>
   );
 
   return (
@@ -280,6 +349,57 @@ export default function Wallet() {
                 title="Cancel"
                 onPress={() => {
                   setModalVisible(false);
+                }}
+                color="#FF0000"
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={editModalVisible}
+        onRequestClose={() => {
+          setEditModalVisible(!editModalVisible);
+        }}
+      >
+        <View style={homeStyles.centeredView}>
+          <View style={homeStyles.modalView}>
+            <Text>Bank Name</Text>
+            <Picker
+              style={homeStyles.input}
+              selectedValue={newBankName}
+              onValueChange={(itemValue) => setNewBankName(itemValue)}
+            >
+              {initialAccountsData.map((bank) => (
+                <Picker.Item
+                  key={bank.bankName}
+                  label={bank.bankName}
+                  value={bank.bankName}
+                />
+              ))}
+            </Picker>
+            <Text>Account Number</Text>
+            <TextInput
+              style={homeStyles.input}
+              onChangeText={setNewAccountNumber}
+              value={newAccountNumber}
+            />
+            <Text>Card Number</Text>
+            <TextInput
+              style={homeStyles.input}
+              onChangeText={setNewCardNumber}
+              value={newCardNumber}
+            />
+            <View style={homeStyles.modalButton}>
+              <Button title="Save" onPress={handleSaveEdit} />
+            </View>
+            <View style={homeStyles.modalButton}>
+              <Button
+                title="Cancel"
+                onPress={() => {
+                  setEditModalVisible(false);
                 }}
                 color="#FF0000"
               />

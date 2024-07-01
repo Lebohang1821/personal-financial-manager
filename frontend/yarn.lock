@@ -5437,7 +5437,7 @@ react-is@^18.0.0:
 
 react-native-gesture-handler@^2.17.1:
   version "2.17.1"
-  resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.17.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.17.1.tgz#f458a6099f09afac144f3e67add96667d859a88d"
   integrity sha512-pWfniN6NuVKUq40KACuD3NCMe+bWNQCpD3cmxL6aLSCTwPKYmf7l4Lp0/E/almpjvxhybJZtFLU0w4tmxnIKaA==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
