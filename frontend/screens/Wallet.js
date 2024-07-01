@@ -110,8 +110,8 @@ const initialAccountsData = [
   },
   {
     bankName: "Capitec Bank",
-    logo: require("./assets/Capitec-Bank.png"),
-    logoUri: "./assets/Capitec-Bank.png",
+    logo: require("./assets/Capitec-Bank.jpg"),
+    logoUri: "./assets/Capitec-Bank.jpg",
   },
   {
     bankName: "FNB",
@@ -120,8 +120,8 @@ const initialAccountsData = [
   },
   {
     bankName: "African Bank",
-    logo: require("./assets/African-bank.svg"),
-    logoUri: "./assets/African-bank.svg",
+    logo: require("./assets/African-bank.png"),
+    logoUri: "./assets/African-bank.png",
   },
   {
     bankName: "Nedbank",
