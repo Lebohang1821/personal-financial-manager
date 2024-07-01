@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextInput, Button } from "react-native";
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Modal, TextInput, Button, Alert } from "react-native";
+import * as FileSystem from 'expo-file-system';
 
 const accountsData = [
   {
@@ -104,7 +105,6 @@ const homeStyles = StyleSheet.create({
   },
   modalButton: {
     marginTop: 10,
-    width: 200,
   },
 });
 
@@ -118,9 +118,19 @@ export default function Wallet() {
     setModalVisible(true);
   };
 
-  const handleSaveCard = () => {
-    // Handle saving the new card information
-    // You can add the new card to accountsData or handle it according to your needs
+  const handleSaveCard = async () => {
+    const newCard = {
+      bankName: newBankName,
+      accountNumber: newAccountNumber,
+      cardNumber: newCardNumber,
+    };
+    const path = `${FileSystem.documentDirectory}${newBankName}_card.txt`;
+    try {
+      await FileSystem.writeAsStringAsync(path, JSON.stringify(newCard));
+      Alert.alert("Success", "Card saved successfully");
+    } catch (error) {
+      Alert.alert("Error", "Failed to save card");
+    }
     setModalVisible(false);
   };
 
