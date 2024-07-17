@@ -222,11 +222,13 @@ export default function Wallet() {
       return;
     }
 
+    const maskedCardNumber = `**** **** **** *${newCardNumber}`;
+
     const newCard = {
       id: accounts.length + 1,
       bankName: newBankName,
       accountNumber: newAccountNumber || "N/A",
-      cardNumber: newCardNumber || "N/A",
+      cardNumber: maskedCardNumber,
       balance: 0, // Default balance for new cards
       logo: selectedBank.logo, // Use selected bank's logo
       logoUri: selectedBank.logoUri, // Store URI of selected bank's logo
@@ -253,18 +255,20 @@ export default function Wallet() {
     setSelectedAccount(account);
     setNewBankName(account.bankName);
     setNewAccountNumber(account.accountNumber);
-    setNewCardNumber(account.cardNumber);
+    setNewCardNumber(account.cardNumber.slice(-3)); // Allow editing only the last 3 digits
     setEditModalVisible(true);
   };
 
   const handleSaveEdit = async () => {
+    const maskedCardNumber = `**** **** **** *${newCardNumber}`;
+
     const updatedAccounts = accounts.map((account) =>
       account.id === selectedAccount.id
         ? {
             ...account,
             bankName: newBankName,
             accountNumber: newAccountNumber,
-            cardNumber: newCardNumber,
+            cardNumber: maskedCardNumber,
           }
         : account
     );
@@ -286,14 +290,14 @@ export default function Wallet() {
         message: `Bank Name: ${account.bankName}\nAccount Number: ${account.accountNumber}`,
       });
     } catch (error) {
-      Alert.alert("Error", "Failed to share the account information.");
+      console.error("Failed to share card", error);
     }
   };
 
-  const renderRightActions = (itemId) => (
+  const renderRightActions = (id) => (
     <TouchableOpacity
       style={homeStyles.deleteButton}
-      onPress={() => handleDeleteCard(itemId)}
+      onPress={() => handleDeleteCard(id)}
     >
       <Text style={homeStyles.deleteButtonText}>Delete</Text>
     </TouchableOpacity>
@@ -390,10 +394,12 @@ export default function Wallet() {
               onChangeText={setNewAccountNumber}
             />
             <TextInput
-              placeholder="Card Number"
+              placeholder="Last 3 digits of Card Number"
               style={homeStyles.input}
               value={newCardNumber}
               onChangeText={setNewCardNumber}
+              maxLength={3}
+              keyboardType="numeric"
             />
             <Button title="Save" onPress={handleSaveCard} />
             <Button
@@ -437,10 +443,12 @@ export default function Wallet() {
               onChangeText={setNewAccountNumber}
             />
             <TextInput
-              placeholder="Card Number"
+              placeholder="Last 3 digits of Card Number"
               style={homeStyles.input}
               value={newCardNumber}
               onChangeText={setNewCardNumber}
+              maxLength={3}
+              keyboardType="numeric"
             />
             <Button title="Save" onPress={handleSaveEdit} />
             <Button
