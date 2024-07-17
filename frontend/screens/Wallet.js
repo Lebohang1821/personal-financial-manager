@@ -173,7 +173,7 @@ export default function Wallet() {
   const [newBankName, setNewBankName] = useState("");
   const [newAccountNumber, setNewAccountNumber] = useState("");
   const [newCardNumber, setNewCardNumber] = useState("");
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState(initialAccountsData);
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -185,12 +185,19 @@ export default function Wallet() {
     try {
       const storedAccounts = await AsyncStorage.getItem("accounts");
       if (storedAccounts) {
-        setAccounts(JSON.parse(storedAccounts));
+        const parsedAccounts = JSON.parse(storedAccounts);
+        // Validate parsedAccounts to ensure it is an array and has the required structure
+        if (Array.isArray(parsedAccounts)) {
+          setAccounts(parsedAccounts);
+        } else {
+          setAccounts(initialAccountsData); // Load initial data if parsed data is not valid
+        }
       } else {
         setAccounts(initialAccountsData); // Load initial data if no stored data found
       }
     } catch (error) {
       console.error("Failed to load accounts from storage", error);
+      setAccounts(initialAccountsData); // Load initial data if error occurs
     }
   };
 
@@ -218,8 +225,8 @@ export default function Wallet() {
     const newCard = {
       id: accounts.length + 1,
       bankName: newBankName,
-      accountNumber: newAccountNumber,
-      cardNumber: newCardNumber,
+      accountNumber: newAccountNumber || "N/A",
+      cardNumber: newCardNumber || "N/A",
       balance: 0, // Default balance for new cards
       logo: selectedBank.logo, // Use selected bank's logo
       logoUri: selectedBank.logoUri, // Store URI of selected bank's logo
@@ -317,10 +324,12 @@ export default function Wallet() {
       <View style={homeStyles.accountItem}>
         <Image source={item.logo} style={homeStyles.logo} />
         <View>
-          <Text style={homeStyles.bankName}>{item.bankName}</Text>
-          <Text>Account Number: {item.accountNumber}</Text>
-          <Text>Card Number: {item.cardNumber}</Text>
-          <Text>Balance: R {item.balance.toFixed(2)}</Text>
+          <Text style={homeStyles.bankName}>
+            {item.bankName || "Unknown Bank"}
+          </Text>
+          <Text>Account Number: {item.accountNumber || "N/A"}</Text>
+          <Text>Card Number: {item.cardNumber || "N/A"}</Text>
+          <Text>Balance: R {item.balance?.toFixed(2) || "0.00"}</Text>
         </View>
       </View>
     </Swipeable>
@@ -334,14 +343,16 @@ export default function Wallet() {
   return (
     <View style={homeStyles.container}>
       <View style={homeStyles.headingContainer}>
-        <Text style={homeStyles.heading}>Wallet</Text>
+        <Text style={homeStyles.heading}>My Accounts</Text>
         <TouchableOpacity onPress={handleAddCard}>
           <Text style={homeStyles.plusButton}>+</Text>
         </TouchableOpacity>
       </View>
       <FlatList
         data={accounts}
-        keyExtractor={(account) => account.id.toString()}
+        keyExtractor={(account) =>
+          account?.id ? account.id.toString() : Math.random().toString()
+        }
         renderItem={renderItem}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -357,12 +368,13 @@ export default function Wallet() {
       >
         <View style={homeStyles.centeredView}>
           <View style={homeStyles.modalView}>
-            <Text>Bank Name</Text>
+            <Text>Add New Card</Text>
             <Picker
-              style={homeStyles.input}
               selectedValue={newBankName}
+              style={{ height: 50, width: 250 }}
               onValueChange={(itemValue) => setNewBankName(itemValue)}
             >
+              <Picker.Item label="Select Bank" value="" />
               {initialAccountsData.map((bank) => (
                 <Picker.Item
                   key={bank.bankName}
@@ -371,33 +383,28 @@ export default function Wallet() {
                 />
               ))}
             </Picker>
-            <Text>Account Number</Text>
             <TextInput
+              placeholder="Account Number"
               style={homeStyles.input}
-              onChangeText={setNewAccountNumber}
               value={newAccountNumber}
+              onChangeText={setNewAccountNumber}
             />
-            <Text>Card Number</Text>
             <TextInput
+              placeholder="Card Number"
               style={homeStyles.input}
-              onChangeText={setNewCardNumber}
               value={newCardNumber}
+              onChangeText={setNewCardNumber}
             />
-            <View style={homeStyles.modalButton}>
-              <Button title="Save" onPress={handleSaveCard} />
-            </View>
-            <View style={homeStyles.modalButton}>
-              <Button
-                title="Cancel"
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-                color="#FF0000"
-              />
-            </View>
+            <Button title="Save" onPress={handleSaveCard} />
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => setModalVisible(false)}
+            />
           </View>
         </View>
       </Modal>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -408,31 +415,39 @@ export default function Wallet() {
       >
         <View style={homeStyles.centeredView}>
           <View style={homeStyles.modalView}>
-            <Text>Bank Name</Text>
-            <Text>Account Number</Text>
+            <Text>Edit Card</Text>
+            <Picker
+              selectedValue={newBankName}
+              style={{ height: 50, width: 250 }}
+              onValueChange={(itemValue) => setNewBankName(itemValue)}
+            >
+              <Picker.Item label="Select Bank" value="" />
+              {initialAccountsData.map((bank) => (
+                <Picker.Item
+                  key={bank.bankName}
+                  label={bank.bankName}
+                  value={bank.bankName}
+                />
+              ))}
+            </Picker>
             <TextInput
+              placeholder="Account Number"
               style={homeStyles.input}
-              onChangeText={setNewAccountNumber}
               value={newAccountNumber}
+              onChangeText={setNewAccountNumber}
             />
-            <Text>Card Number</Text>
             <TextInput
+              placeholder="Card Number"
               style={homeStyles.input}
-              onChangeText={setNewCardNumber}
               value={newCardNumber}
+              onChangeText={setNewCardNumber}
             />
-            <View style={homeStyles.modalButton}>
-              <Button title="Save" onPress={handleSaveEdit} />
-            </View>
-            <View style={homeStyles.modalButton}>
-              <Button
-                title="Cancel"
-                onPress={() => {
-                  setEditModalVisible(false);
-                }}
-                color="#FF0000"
-              />
-            </View>
+            <Button title="Save" onPress={handleSaveEdit} />
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => setEditModalVisible(false)}
+            />
           </View>
         </View>
       </Modal>
